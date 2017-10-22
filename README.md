@@ -40,4 +40,5 @@
 
 ### Nützliche Links ###
 * [PHP : Creating a CMS in 1 HOUR](https://www.youtube.com/watch?v=QNxU3Qa6QZs) PHP CMS Einstiegstutorial
+* [Build A CMS Admin Bootstrap Theme From Scratch](https://www.youtube.com/watch?v=pXbEcGUtHgo) Bootstrap Einstiegstutorial zum designen eines Admin-Themes
 * [markdown cheatsheet](https://github.com/tchapi/markdown-cheatsheet/blob/master/README.md) Formatierung von README.md Dateien

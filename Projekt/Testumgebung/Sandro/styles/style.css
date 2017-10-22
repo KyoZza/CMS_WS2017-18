@@ -1,2 +1,29 @@
 body {
+    padding-top: 50px;
+    font-family: Arial, Helvetica, sans-serif; 
+}
+
+.container {
+    width:500px;
+    margin: 0 auto;
+}
+
+a:link, a:visited, a:visited > logo, a:link > logo {
+    color: slategray;
+    text-decoration: none;
+    border-bottom: 1px dotted slategray; 
+}
+
+a:hover, a:hover > logo {
+    color: #444;
+    border-bottom-color: #444;
+}
+
+small {
+    color: #999;
+    font-style: italic;
+}
+
+p {
+    line-height: 24px;
 }
