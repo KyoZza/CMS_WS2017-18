@@ -46,4 +46,5 @@ __Tutorials:__
 
 __Sonstiges:__
 * [Color Scheme Editor](https://work.smarchal.com/twbscolor/) Automatisch generierte CSS-Regeln für ein Farbschema der Bootstrap-Navbar
+* [Bootswatch](https://bootswatch.com/) Freie Bootstrap Themes
 * ..
