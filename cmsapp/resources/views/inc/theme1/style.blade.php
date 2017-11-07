@@ -2,7 +2,7 @@
     /* Styles for fullpage header */
     #showcase {
         /* 220067 235721 253905 318238 589840 */
-        background-image: url('/storage/header_images/pexels-photo-318238.jpeg');
+        background-image: url('/storage/header_images/pexels-photo-589840.jpeg');
         height: 100vh;  /* vh = viewport height */ 
         background-size: cover;
         background-position: center;

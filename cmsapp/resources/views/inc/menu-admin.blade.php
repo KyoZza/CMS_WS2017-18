@@ -22,7 +22,7 @@
     
         <div class="customize-content-item"><a href="#" class="list-group-item {{$activeListGroupItem == 'general' ? 'active main-color-bg' : ''}}">
             General</a></div>
-        <div class="customize-content-item"><a href="#" class="list-group-item {{$activeListGroupItem == 'navbar' ? 'active main-color-bg' : ''}}">
+        <div class="customize-content-item"><a href="/admin/customize/navbar" class="list-group-item {{$activeListGroupItem == 'navbar' ? 'active main-color-bg' : ''}}">
             Navbar</a></div>
         <div class="customize-content-item"><a href="#" class="list-group-item {{$activeListGroupItem == 'header' ? 'active main-color-bg' : ''}}">
             Header</a></div>

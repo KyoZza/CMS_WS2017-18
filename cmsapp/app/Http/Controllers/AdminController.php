@@ -143,9 +143,8 @@ class AdminController extends Controller
                 $this->breadcrumbActive['customize-navbar']                                
             ],
             'customizeIsCollapsed' => true,
-            'activeListGroupItem' => 'mavbar',
+            'activeListGroupItem' => 'navbar',
 
-            'post' => $post
         );
 
         return view('admin.customize-navbar')->with($data);
