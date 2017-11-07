@@ -17,10 +17,11 @@
     </VirtualHost>
 
     <VirtualHost *:80>
-        DocumentRoot "C:/xampp/htdocs/cmsapp/public"
+        DocumentRoot "C:/xampp/htdocs/CMS_WS2017-18/cmsapp/public"
         ServerName cmsapp.dev
     </VirtualHost>
     ```
+    Am Besten den Projekt Order unter `C:/xampp/htdocs/` ablegen. Ansonsten selbständig das ganze umbiegen ;)
    * __update httpd-vhosts file__
     `\Windows\System32\drivers\etc\hosts`
 
