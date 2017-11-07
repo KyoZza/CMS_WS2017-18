@@ -1,0 +1,36 @@
+/* Styles for the blog */
+
+.blog-list {
+    padding: 0;
+}
+.blog-list h3 {
+    margin: 0;
+}
+.blog-list .well, .blog-post .well {
+    border: none;
+    box-shadow: 6px 6px 7px 0px rgba(0, 0, 0, 0.1);
+}
+.blog-list hr {
+    margin-top: 6px;
+    margin-bottom: 10px;
+}
+
+.blog-post hr {
+    margin-top: 24px;
+    margin-bottom: 24px;
+}
+
+.blog-post h1 {
+    margin: 0 !important;
+    display: inline-block;
+}
+
+.object-fit-cover, .object-fit-cover-show-page {
+    max-height: 144px;
+    width: 100%;
+    object-fit: cover; /*magic*/
+}
+.object-fit-cover-show-page {
+    max-height: 404px;
+}
+
