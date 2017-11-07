@@ -27,14 +27,18 @@ class AdminController extends Controller
             'dashboard' => (object)array('name' => 'Dashboard', 'class' => 'active', 'url' => '/admin'),
             'posts' => (object)array('name' => 'Posts', 'class' => 'active', 'url' => '/admin/posts'),   
             'post-create' => (object)array('name' => 'Create Post', 'class' => 'active', 'url' => '/admin/posts/create'),   
-            'post-edit' => (object)array('name' => 'Edit Post', 'class' => 'active', 'url' => '/admin/posts/') 
+            'post-edit' => (object)array('name' => 'Edit Post', 'class' => 'active', 'url' => '/admin/posts/'),
+            'customize-navbar' => (object)array('name' => 'Customize Navbar', 'class' => 'active', 'url' => '/admin/customize/navbar')   
+            
         ];
     
         $this->breadcrumbInactive = [
             'dashboard' => (object)array('name' => 'Dashboard', 'class' => '', 'url' => '/admin'),
             'posts' => (object)array('name' => 'Posts', 'class' => '', 'url' => '/admin/posts'),   
             'post-create' => (object)array('name' => 'Create Post', 'class' => '', 'url' => '/admin/posts/create'),   
-            'post-edit' => (object)array('name' => 'Edit Post', 'class' => '', 'url' => '/admin/posts/')           
+            'post-edit' => (object)array('name' => 'Edit Post', 'class' => '', 'url' => '/admin/posts/'),
+            'customize-navbar' => (object)array('name' => 'Customize Navbar', 'class' => '', 'url' => '/admin/customize/navbar')   
+            
         ];
     }
 
@@ -134,13 +138,12 @@ class AdminController extends Controller
         // Data to pass into the template
         $data = array(
             'title' => 'Customize Navbar',
-            'icon' => 'pencil-square-o',
+            'icon' => 'paint-brush',
             'breadcrumbs' => [
-                $this->breadcrumbInactive['posts'],
-                $this->breadcrumbActive['post-edit']                                
+                $this->breadcrumbActive['customize-navbar']                                
             ],
             'customizeIsCollapsed' => true,
-            'activeListGroupItem' => 'posts',
+            'activeListGroupItem' => 'mavbar',
 
             'post' => $post
         );
