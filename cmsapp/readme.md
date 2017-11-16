@@ -55,3 +55,25 @@ The Laravel framework is open-sourced software licensed under the [MIT license](
 
 
 
+
+## setup
+\apache\conf\extra\httpd-vhosts
+
+add the following :
+
+<VirtualHost *:80>
+    DocumentRoot "C:/xampp/htdocs/"
+    ServerName localhost
+</VirtualHost>
+
+<VirtualHost *:80>
+    DocumentRoot "C:/xampp/htdocs/cmsapp/public"
+    ServerName cmsapp.dev
+</VirtualHost>
+
+\Windows\System32\drivers\etc\hosts
+
+add the following : 
+127.0.0.1 localhost
+127.0.0.1 cmsapp.dev
+
