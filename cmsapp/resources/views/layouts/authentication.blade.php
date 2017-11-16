@@ -15,14 +15,14 @@
 </head>
 <body>
     <div id="app">
-        @include('inc.navbar-admin')
-        @include('inc.header-admin')
+        @include('inc.admin.navbar-admin')
+        @include('inc.admin.header-admin')
         
         <div class="section">
             @yield('content')                  
         </div>
 
-        @include('inc.footer-admin')
+        @include('inc.admin.footer-admin')
     </div>
 
     <!-- Scripts -->

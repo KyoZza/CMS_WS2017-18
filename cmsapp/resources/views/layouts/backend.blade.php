@@ -15,15 +15,15 @@
 </head>
 <body>
     <div id="app">
-        @include('inc.navbar-admin')
-        @include('inc.header-admin')
-        @include('inc.breadcrumb-admin')
+        @include('inc.admin.navbar-admin')
+        @include('inc.admin.header-admin')
+        @include('inc.admin.breadcrumb-admin')
 
         <div class="section">
             <div class="container">
                 <div class="row">
                     <div class="col-md-3">
-                        @include('inc.menu-admin')
+                        @include('inc.admin.menu-admin')
                     </div>
                     <div class="col-md-9">
                         @yield('content')                  
@@ -32,7 +32,7 @@
             </div>
         </div>
 
-        @include('inc.footer-admin')
+        @include('inc.admin.footer-admin')
     </div>
 
     <!-- Scripts -->
