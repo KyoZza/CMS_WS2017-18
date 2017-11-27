@@ -36,6 +36,17 @@ Route::resource('/admin/pages', 'PagesController');
 
 Route::resource('blog', 'PostsController');
 
+//Contact Form
+Route::get('/contact', function(){
+
+    return view('/theme1/contact');
+});  
+
+Route::post('/theme1/contact/submit', 'MessagesController@submit');
+
+
+Route::get('/theme1/messages', 'MessagesController@getMessages');
+
 
 /* custom routes which are fetched from the database */
 Route::get('/{url}', 'PagesController@custom');

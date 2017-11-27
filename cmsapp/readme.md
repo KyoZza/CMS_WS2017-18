@@ -77,3 +77,7 @@ add the following :
 127.0.0.1 localhost
 127.0.0.1 cmsapp.dev
 
+Laravell Formular:
+evtl muss der code im projekt folder ausgeführt werden:
+composer require "laravelcollective/html":"^5.4.0"
+
