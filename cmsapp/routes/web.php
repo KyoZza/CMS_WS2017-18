@@ -10,6 +10,7 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+
 /*  home route  */
 Route::get('/', 'PagesController@home');
 
@@ -20,7 +21,7 @@ Auth::routes();
 // index
 Route::get('/admin', 'AdminController@index');
 
-//customizing
+// customizing
 Route::get('/admin/customize/navbar', 'AdminController@customizeNavbar');
 
 // posts
@@ -34,18 +35,18 @@ Route::resource('/admin/users', 'UserController');
 // pages
 Route::resource('/admin/pages', 'PagesController');
 
+/* blog routes */
 Route::resource('blog', 'PostsController');
 
-//Contact Form
-Route::get('/contact', function(){
+/* contact routes */
+// form
+Route::get('/contact', 'MessagesController@contact');  
+Route::post('/contact/submit', 'MessagesController@submit');
 
-    return view('/theme1/contact');
-});  
-
-Route::post('/theme1/contact/submit', 'MessagesController@submit');
+// messages
+Route::get('/messages', 'MessagesController@getMessages');
 
 
-Route::get('/theme1/messages', 'MessagesController@getMessages');
 
 
 /* custom routes which are fetched from the database */

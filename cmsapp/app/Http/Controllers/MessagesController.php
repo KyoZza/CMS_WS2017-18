@@ -4,14 +4,21 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Message;
+use App\NavItem;
 
 class MessagesController extends Controller
 {
+    public function contact() {
+        // get NavBar Items
+        $navItems = Navitem::orderBy('position', 'asc')->get();
+        
+        return view('theme1.contact')->with('navItems', $navItems);
+    }
+
     public function submit(Request $request){
         $this->validate($request, ['name' => 'required', 'email' => 'required']);
     
-            //Create new Message
-        
+        // Create new Message 
         $message = new Message;
         $message->name = $request->input('name');
         $message->email = $request->input('email');
@@ -20,16 +27,21 @@ class MessagesController extends Controller
         // Save Message
         $message->save();
 
-        //Redircet
-            return redirect('/')->with('status', 'Message Sent');
+        // Redirect
+        return redirect('/')->with('status', 'Message Sent');
     }
 
 
-    public function getMessages(){
-
+    public function getMessages() {
         $messages = Message::all();
+        // get NavBar Items
+        $navItems = Navitem::orderBy('position', 'asc')->get();
+        
+        $data = [
+            'messages' => $messages,
+            'navItems' => $navItems
+        ];
 
-        return view('messages')->with('messages', $messages);
-
+        return view('theme1.messages')->with($data);
     }
 }
