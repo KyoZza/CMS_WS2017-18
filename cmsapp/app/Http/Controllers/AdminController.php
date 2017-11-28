@@ -28,7 +28,9 @@ class AdminController extends Controller
             'posts' => (object)array('name' => 'Posts', 'class' => 'active', 'url' => '/admin/posts'),   
             'post-create' => (object)array('name' => 'Create Post', 'class' => 'active', 'url' => '/admin/posts/create'),   
             'post-edit' => (object)array('name' => 'Edit Post', 'class' => 'active', 'url' => '/admin/posts/'),
-            'customize-navbar' => (object)array('name' => 'Customize Navbar', 'class' => 'active', 'url' => '/admin/customize/navbar')   
+            'customize-navbar' => (object)array('name' => 'Customize Navbar', 'class' => 'active', 'url' => '/admin/customize/navbar'),
+            'messages' => (object)array('name' => 'Messages', 'class' => 'active', 'url' => '/admin/messages')   
+            
             
         ];
     
@@ -37,7 +39,8 @@ class AdminController extends Controller
             'posts' => (object)array('name' => 'Posts', 'class' => '', 'url' => '/admin/posts'),   
             'post-create' => (object)array('name' => 'Create Post', 'class' => '', 'url' => '/admin/posts/create'),   
             'post-edit' => (object)array('name' => 'Edit Post', 'class' => '', 'url' => '/admin/posts/'),
-            'customize-navbar' => (object)array('name' => 'Customize Navbar', 'class' => '', 'url' => '/admin/customize/navbar')   
+            'customize-navbar' => (object)array('name' => 'Customize Navbar', 'class' => '', 'url' => '/admin/customize/navbar'),   
+            'messages' => (object)array('name' => 'Messages', 'class' => 'inactive', 'url' => '/admin/messages')   
             
         ];
     }
@@ -142,7 +145,7 @@ class AdminController extends Controller
             'breadcrumbs' => [
                 $this->breadcrumbActive['customize-navbar']                                
             ],
-            'customizeIsCollapsed' => true,
+            'customizeIsCollapsed' => false,
             'activeListGroupItem' => 'navbar',
 
         );
@@ -153,16 +156,15 @@ class AdminController extends Controller
     
     public function getMessages() {
         $messages = Message::all();
-        // get NavBar Items
-        //$navItems = Navitem::orderBy('position', 'asc')->get();
+
         $data = array(
             'title' => 'Messages',
-            'icon' => 'paint-brush',
+            'icon' => 'comments-o',
             'breadcrumbs' => [
-                $this->breadcrumbActive['customize-navbar']                                
+                $this->breadcrumbActive['messages']                                
             ],
             'customizeIsCollapsed' => true,
-            'activeListGroupItem' => 'navbar',
+            'activeListGroupItem' => 'messages',
             'messages' => $messages
 
         );

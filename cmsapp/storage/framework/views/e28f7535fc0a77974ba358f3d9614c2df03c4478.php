@@ -5,7 +5,8 @@
         <i class="fa fa-pencil-square-o" aria-hidden="true"></i>Posts</a>
     <a href="/admin/pages" class="list-group-item <?php echo e($activeListGroupItem == 'pages' ? 'active main-color-bg' : ''); ?>">
         <i class="fa fa-leanpub" aria-hidden="true"></i>Pages</a>
-    
+    <a href="/admin/messages" class="list-group-item <?php echo e($activeListGroupItem == 'messages' ? 'active main-color-bg' : ''); ?>">
+        <i class="fa fa-comments-o" aria-hidden="true"></i>Messages</a>
 
 
     <?php if($customizeIsCollapsed): ?>
@@ -33,6 +34,4 @@
 
     <a href="/admin/users" class="list-group-item <?php echo e($activeListGroupItem == 'users' ? 'active main-color-bg' : ''); ?>">
         <i class="fa fa-user-circle" aria-hidden="true"></i>Users</a>
-    <a href="#" class="list-group-item <?php echo e($activeListGroupItem == 'etc' ? 'active main-color-bg' : ''); ?>">
-        <i class="fa fa-ellipsis-h" aria-hidden="true"></i>And so on....</a>
 </div>
