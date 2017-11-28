@@ -32,16 +32,4 @@ class MessagesController extends Controller
     }
 
 
-    public function getMessages() {
-        $messages = Message::all();
-        // get NavBar Items
-        $navItems = Navitem::orderBy('position', 'asc')->get();
-        
-        $data = [
-            'messages' => $messages,
-            'navItems' => $navItems
-        ];
-
-        return view('theme1.messages')->with($data);
-    }
 }

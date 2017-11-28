@@ -44,7 +44,7 @@ Route::get('/contact', 'MessagesController@contact');
 Route::post('/contact/submit', 'MessagesController@submit');
 
 // messages
-Route::get('/messages', 'MessagesController@getMessages');
+Route::get('/admin/messages', 'AdminController@getMessages');
 
 
 

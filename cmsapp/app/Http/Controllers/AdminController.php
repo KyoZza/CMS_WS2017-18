@@ -7,7 +7,7 @@ use App\User;
 use App\Activity;
 use App\Post;
 use App\Page;
-
+use App\Message;
 
 class AdminController extends Controller
 {
@@ -148,5 +148,25 @@ class AdminController extends Controller
         );
 
         return view('admin.customize-navbar')->with($data);
+    }
+
+    
+    public function getMessages() {
+        $messages = Message::all();
+        // get NavBar Items
+        //$navItems = Navitem::orderBy('position', 'asc')->get();
+        $data = array(
+            'title' => 'Messages',
+            'icon' => 'paint-brush',
+            'breadcrumbs' => [
+                $this->breadcrumbActive['customize-navbar']                                
+            ],
+            'customizeIsCollapsed' => true,
+            'activeListGroupItem' => 'navbar',
+            'messages' => $messages
+
+        );
+
+        return view('admin.messages')->with($data);
     }
 }
