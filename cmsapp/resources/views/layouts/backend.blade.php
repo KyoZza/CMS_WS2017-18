@@ -12,6 +12,8 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="/vendor/itsjavi/bootstrap-colorpicker/dist/css/bootstrap-colorpicker.css" rel="stylesheet">
+    @include('inc.style-admin')
 </head>
 <body>
     <div id="app">
@@ -37,7 +39,9 @@
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}"></script>
+    
     @include('inc.general.ckeditor')
-
+    @include('inc.color-admin')
+    
 </body>
 </html>

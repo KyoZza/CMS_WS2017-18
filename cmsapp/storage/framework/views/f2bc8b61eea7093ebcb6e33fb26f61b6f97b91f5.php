@@ -12,6 +12,8 @@
 
     <!-- Styles -->
     <link href="<?php echo e(asset('css/app.css')); ?>" rel="stylesheet">
+    <link href="/vendor/itsjavi/bootstrap-colorpicker/dist/css/bootstrap-colorpicker.css" rel="stylesheet">
+    <?php echo $__env->make('inc.style-admin', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
 </head>
 <body>
     <div id="app">
@@ -37,7 +39,9 @@
 
     <!-- Scripts -->
     <script src="<?php echo e(asset('js/app.js')); ?>"></script>
+    
     <?php echo $__env->make('inc.general.ckeditor', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
-
+    <?php echo $__env->make('inc.color-admin', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+    
 </body>
 </html>

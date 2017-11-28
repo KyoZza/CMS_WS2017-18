@@ -1,7 +1,7 @@
 <section id="breadcrumb">
     <div class="container">
         <ol class="breadcrumb">
-            <li>Admin Area</li>        
+            <li><a href="/admin">Admin Area</a></li>        
             @foreach($breadcrumbs as $breadcrumb)
                 <i class="fa fa-angle-right" aria-hidden="true"></i>
                 @switch($breadcrumb->name)

@@ -1,4 +1,4 @@
-<nav class="admin navbar navbar-inverse">
+<nav class="admin navbar navbar-inverse main-color-bg">
     <div class="container">
         <div class="navbar-header">
 
@@ -30,6 +30,21 @@
                     <li><a href="<?php echo e(route('login')); ?>">Login</a></li>
                     <li><a href="<?php echo e(route('register')); ?>">Register</a></li>
                 <?php else: ?>
+                    <li>
+                        <a href="#" id="page-color">Page Color</a>
+              
+                        <?php echo Form::open(['action' => 'AdminController@setPageColor', 'method' => 'POST']); ?>
+
+                            <div class="form-group" style="display: none">
+                                <?php echo e(Form::text('color', '', ['id' => 'nav-color-picker-value'])); ?>
+
+                                <?php echo e(Form::submit('Submit', ['id' => 'nav-color-picker-submit'])); ?>
+
+                            </div>
+                        <?php echo Form::close(); ?>
+
+                    </li>
+
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true">
                             Welcome, <?php echo e(Auth::user()->name); ?> <span class="caret"></span>

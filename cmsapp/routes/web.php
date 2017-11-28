@@ -14,8 +14,12 @@
 /*  home route  */
 Route::get('/', 'PagesController@home');
 
-/*  admin routes  */
+
+
+/*  auth routes  */
 Auth::routes();
+
+
 
 /*  admin routes  */
 // index
@@ -35,8 +39,15 @@ Route::resource('/admin/users', 'UserController');
 // pages
 Route::resource('/admin/pages', 'PagesController');
 
+// admin page color
+Route::post('/admin/color', 'AdminController@setPageColor');
+
+
+
 /* blog routes */
 Route::resource('blog', 'PostsController');
+
+
 
 /* contact routes */
 // form

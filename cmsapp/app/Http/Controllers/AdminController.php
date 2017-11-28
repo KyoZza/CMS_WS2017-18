@@ -166,9 +166,21 @@ class AdminController extends Controller
             'customizeIsCollapsed' => true,
             'activeListGroupItem' => 'messages',
             'messages' => $messages
-
         );
 
         return view('admin.messages')->with($data);
+    }
+
+    public function setPageColor(Request $request)
+    {
+        $this->validate($request, [
+            'color' => 'required',
+        ]);     
+        
+        $user = auth()->user();
+        $user->theme_color = $request->input('color');
+        $user->save();
+
+        return redirect('/admin')->with('success', 'Set new page color');
     }
 }

@@ -1,7 +1,7 @@
 <section id="breadcrumb">
     <div class="container">
         <ol class="breadcrumb">
-            <li>Admin Area</li>        
+            <li><a href="/admin">Admin Area</a></li>        
             <?php $__currentLoopData = $breadcrumbs; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $breadcrumb): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                 <i class="fa fa-angle-right" aria-hidden="true"></i>
                 <?php switch($breadcrumb->name):
