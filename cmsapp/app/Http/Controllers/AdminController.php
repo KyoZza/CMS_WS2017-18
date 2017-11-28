@@ -28,7 +28,12 @@ class AdminController extends Controller
             'posts' => (object)array('name' => 'Posts', 'class' => 'active', 'url' => '/admin/posts'),   
             'post-create' => (object)array('name' => 'Create Post', 'class' => 'active', 'url' => '/admin/posts/create'),   
             'post-edit' => (object)array('name' => 'Edit Post', 'class' => 'active', 'url' => '/admin/posts/'),
+            'customize' => (object)array('name' => 'Customize', 'class' => 'active', 'url' => '/admin/customize'),
+            'customize-header' => (object)array('name' => 'Customize Header', 'class' => 'active', 'url' => '/admin/customize/header'),               
             'customize-navbar' => (object)array('name' => 'Customize Navbar', 'class' => 'active', 'url' => '/admin/customize/navbar'),
+            'customize-general' => (object)array('name' => 'General Customization', 'class' => 'active', 'url' => '/admin/customize/general'),               
+            'customize-footer' => (object)array('name' => 'Customize Footer', 'class' => 'active', 'url' => '/admin/customize/footer'),
+            'customize-themes' => (object)array('name' => 'Select Theme', 'class' => 'active', 'url' => '/admin/customize/themes'),
             'messages' => (object)array('name' => 'Messages', 'class' => 'active', 'url' => '/admin/messages')   
             
             
@@ -39,8 +44,13 @@ class AdminController extends Controller
             'posts' => (object)array('name' => 'Posts', 'class' => '', 'url' => '/admin/posts'),   
             'post-create' => (object)array('name' => 'Create Post', 'class' => '', 'url' => '/admin/posts/create'),   
             'post-edit' => (object)array('name' => 'Edit Post', 'class' => '', 'url' => '/admin/posts/'),
-            'customize-navbar' => (object)array('name' => 'Customize Navbar', 'class' => '', 'url' => '/admin/customize/navbar'),   
-            'messages' => (object)array('name' => 'Messages', 'class' => 'inactive', 'url' => '/admin/messages')   
+            'customize' => (object)array('name' => 'Customize', 'class' => '', 'url' => '/admin/customize'),            
+            'customize-header' => (object)array('name' => 'Customize Header', 'class' => '', 'url' => '/admin/customize/header'),   
+            'customize-navbar' => (object)array('name' => 'Customize Navbar', 'class' => '', 'url' => '/admin/customize/navbar'),
+            'customize-general' => (object)array('name' => 'General Customization', 'class' => '', 'url' => '/admin/customize/general'),               
+            'customize-footer' => (object)array('name' => 'Customize Footer', 'class' => '', 'url' => '/admin/customize/footer'),
+            'customize-themes' => (object)array('name' => 'Select Theme', 'class' => '', 'url' => '/admin/customize/themes'), 
+            'messages' => (object)array('name' => 'Messages', 'class' => '', 'url' => '/admin/messages')   
             
         ];
     }
@@ -137,20 +147,99 @@ class AdminController extends Controller
         return view('admin.post-edit')->with($data);
     }
 
+    public function customize() {
+        // Data to pass into the template
+        $data = array(
+            'title' => 'Customization',
+            'icon' => 'paint-brush',
+            'breadcrumbs' => [
+                $this->breadcrumbActive['customize']                                
+            ],
+            'customizeIsCollapsed' => false,
+            'activeListGroupItem' => 'customization'
+        );
+
+        return view('admin.customize')->with($data);
+    }
+
+    public function customizeGeneral() {
+        // Data to pass into the template
+        $data = array(
+            'title' => 'General Customization',
+            'icon' => 'paint-brush',
+            'breadcrumbs' => [
+                $this->breadcrumbInactive['customize'],
+                $this->breadcrumbActive['customize-general']                                
+            ],
+            'customizeIsCollapsed' => false,
+            'activeListGroupItem' => 'general'
+        );
+
+        return view('admin.customize-general')->with($data);
+    }
+
     public function customizeNavbar() {
         // Data to pass into the template
         $data = array(
             'title' => 'Customize Navbar',
             'icon' => 'paint-brush',
             'breadcrumbs' => [
+                $this->breadcrumbInactive['customize'],
                 $this->breadcrumbActive['customize-navbar']                                
             ],
             'customizeIsCollapsed' => false,
-            'activeListGroupItem' => 'navbar',
-
+            'activeListGroupItem' => 'navbar'
         );
 
         return view('admin.customize-navbar')->with($data);
+    }
+
+    public function customizeHeader() {
+        // Data to pass into the template
+        $data = array(
+            'title' => 'Customize Header',
+            'icon' => 'paint-brush',
+            'breadcrumbs' => [
+                $this->breadcrumbInactive['customize'],
+                $this->breadcrumbActive['customize-header']                                
+            ],
+            'customizeIsCollapsed' => false,
+            'activeListGroupItem' => 'header'
+        );
+
+        return view('admin.customize-header')->with($data);
+    }
+
+    public function customizeFooter() {
+        // Data to pass into the template
+        $data = array(
+            'title' => 'Customize Footer',
+            'icon' => 'paint-brush',
+            'breadcrumbs' => [
+                $this->breadcrumbInactive['customize'],
+                $this->breadcrumbActive['customize-footer']                                
+            ],
+            'customizeIsCollapsed' => false,
+            'activeListGroupItem' => 'footer'
+        );
+
+        return view('admin.customize-footer')->with($data);
+    }
+
+    public function customizeThemes() {
+        // Data to pass into the template
+        $data = array(
+            'title' => 'Select Theme',
+            'icon' => 'paint-brush',
+            'breadcrumbs' => [
+                $this->breadcrumbInactive['customize'],
+                $this->breadcrumbActive['customize-themes']                                
+            ],
+            'customizeIsCollapsed' => false,
+            'activeListGroupItem' => 'themes'
+        );
+
+        return view('admin.customize-themes')->with($data);
     }
 
     

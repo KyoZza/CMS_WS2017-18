@@ -41,7 +41,7 @@
                     </li>
 
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true">
+                        <a href="#" class="dropdown-toggle main-color-bg" data-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true">
                             Welcome, {{ Auth::user()->name }} <span class="caret"></span>
                         </a>
 

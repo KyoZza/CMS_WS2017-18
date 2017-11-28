@@ -6,13 +6,15 @@
         $('#page-color').on('hidePicker', function(event) {
             const color = $('#page-color').colorpicker('getValue');
             
-            $('#nav-color-picker-value').val(color);
+            if(color) {
+                $('#nav-color-picker-value').val(color);
             
-            $('.main-color-bg').each(function() {
-                this.style.setProperty( 'background-color', color, 'important' );
-            });
+                $('.main-color-bg').each(function() {
+                    this.style.setProperty( 'background-color', color, 'important' );
+                });
 
-            $('#nav-color-picker-submit').click();                
+                $('#nav-color-picker-submit').click();   
+            }               
         });
     });
 </script>

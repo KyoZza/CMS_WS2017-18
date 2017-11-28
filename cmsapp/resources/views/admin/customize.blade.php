@@ -3,7 +3,7 @@
 @section('content')
     <div class="panel panel-default">
         <div class="panel-heading main-color-bg">
-            <h3 class="panel-title">{{$breadcrumbs[1]->name}}</h3>
+            <h3 class="panel-title">Select Customization Option</h3>
         </div>
         <div class="panel-body">
             
