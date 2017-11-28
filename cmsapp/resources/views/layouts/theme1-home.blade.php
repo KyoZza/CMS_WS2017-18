@@ -21,6 +21,7 @@
             <div class="main-content container">
                 @yield('content')                  
             </div>
+            @include('inc.theme1.footer')
 
         </div>
 

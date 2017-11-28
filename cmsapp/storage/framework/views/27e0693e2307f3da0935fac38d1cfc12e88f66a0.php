@@ -1,4 +1,8 @@
 <style>
+    body {
+        margin-bottom: 0;
+    }
+
     /* Styles for fullpage header */
     #showcase {
         /* 220067 235721 253905 318238 589840 */
@@ -70,6 +74,7 @@
     /* Styles for content area */
     .main-content {
         margin-top: 60px;
+        margin-bottom: 60px;
     }
 
     .main-content h1 {
@@ -80,7 +85,46 @@
         text-decoration: none;
     }
 
-
     
+    #footer-content {
+        background-color: #333;
+        color: #fff;
+        width: 100%;
+    }
+
+    #footer-upper {
+        border-bottom: 100px solid #333; 
+        border-left: 97vw solid transparent;
+    }
+
+    .footer-icon-a {
+        position: absolute;
+    }
+    .footer-icon-link {
+        width: 0;
+        height: 0;
+        border: 20px solid transparent;
+        border-bottom: 20px solid #fff;
+        position: relative;
+        top: -40px;
+    }
+    .footer-icon-link:after {
+        content: '';
+        position: absolute;
+        left: -20px;
+        top: 20px;
+        width: 0;
+        height: 0;
+        border: 20px solid transparent;
+        border-top: 20px solid #fff;
+    }
+
+    .footer-icon {
+        position: absolute;
+        top: 12px;
+        left: -9px;
+        z-index: 10;
+        font-size: 18px;
+    }
 
 </style>
