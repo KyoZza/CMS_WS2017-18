@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="<?php echo e(app()->getLocale()); ?>">
+<html lang="<?php echo e(app()->getLocale()); ?>" class="theme1">
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -19,6 +19,7 @@
         <div id="app">
             <?php echo $__env->make('inc.theme1.header', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
             <div class="main-content container">
+                <?php echo $__env->make('inc.general.messages', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
                 <?php echo $__env->yieldContent('content'); ?>                  
             </div>
             <?php echo $__env->make('inc.theme1.footer', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

@@ -30,6 +30,7 @@ Route::get('/admin/customize', 'AdminController@customize');
 Route::get('/admin/customize/general', 'AdminController@customizeGeneral');
 Route::get('/admin/customize/navbar', 'AdminController@customizeNavbar');
 Route::get('/admin/customize/header', 'AdminController@customizeHeader');
+Route::put('/admin/customize/header', 'AdminController@customizeHeaderUpdate');
 Route::get('/admin/customize/footer', 'AdminController@customizeFooter');
 Route::get('/admin/customize/themes', 'AdminController@customizeThemes');
 

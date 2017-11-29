@@ -14,6 +14,9 @@
     <link href="<?php echo e(asset('css/app.css')); ?>" rel="stylesheet">
     <link href="/vendor/itsjavi/bootstrap-colorpicker/dist/css/bootstrap-colorpicker.css" rel="stylesheet">
     <?php echo $__env->make('inc.style-admin', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+    <?php if(!$customizeIsCollapsed): ?>
+        <?php echo $__env->make('inc.'.$theme.'.style', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?> 
+    <?php endif; ?>
 </head>
 <body>
     <div id="app">
@@ -23,6 +26,8 @@
 
         <div class="section">
             <div class="container">
+                <?php echo $__env->make('inc.general.messages', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+            
                 <div class="row">
                     <div class="col-md-3">
                         <?php echo $__env->make('inc.menu-admin', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
@@ -43,5 +48,26 @@
     <?php echo $__env->make('inc.general.ckeditor', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
     <?php echo $__env->make('inc.color-admin', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
     
+    <script>
+        function onHeaderTitleChange(event) {
+            const value = $(".header-form #title").val();
+            
+            $("#header-title").text(value);
+        }
+
+        function onHeaderSubTitleChange(event) {
+            const value = $(".header-form #subtitle").val();
+         
+            $("#header-subtitle").text(value);
+        }
+
+        function onHeaderImageChange(event, element) {
+            const src = element.firstElementChild.src;
+            document.getElementById('showcase').style.backgroundImage = `url(${src})`;
+
+            const image = src.replace('http://cmsapp.dev/storage/header_images/', '');
+            document.getElementById('header_img').value = image;            
+        }
+    </script>
 </body>
 </html>

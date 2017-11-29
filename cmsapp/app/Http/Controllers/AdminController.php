@@ -8,6 +8,12 @@ use App\Activity;
 use App\Post;
 use App\Page;
 use App\Message;
+use App\NavItem;
+use App\Theme;
+use App\ThemeHeaderOptions;
+use App\HeaderImage;
+
+
 
 class AdminController extends Controller
 {
@@ -148,6 +154,7 @@ class AdminController extends Controller
     }
 
     public function customize() {
+        $theme = Theme::where('is_active', true)->get()->first();   
         // Data to pass into the template
         $data = array(
             'title' => 'Customization',
@@ -156,13 +163,18 @@ class AdminController extends Controller
                 $this->breadcrumbActive['customize']                                
             ],
             'customizeIsCollapsed' => false,
-            'activeListGroupItem' => 'customization'
+            'activeListGroupItem' => 'customization',
+
+            'theme' => $theme->name,
+            'header' => $theme->themeHeaderOptions[1]
         );
 
         return view('admin.customize')->with($data);
     }
 
     public function customizeGeneral() {
+        $theme = Theme::where('is_active', true)->get()->first();     
+
         // Data to pass into the template
         $data = array(
             'title' => 'General Customization',
@@ -172,13 +184,18 @@ class AdminController extends Controller
                 $this->breadcrumbActive['customize-general']                                
             ],
             'customizeIsCollapsed' => false,
-            'activeListGroupItem' => 'general'
+            'activeListGroupItem' => 'general',
+            'theme' => $theme->name,
+            'header' => $theme->themeHeaderOptions[1]
         );
 
         return view('admin.customize-general')->with($data);
     }
 
     public function customizeNavbar() {
+        $theme = Theme::where('is_active', true)->get()->first();        
+        $navItems = Navitem::orderBy('position', 'asc')->get();   
+
         // Data to pass into the template
         $data = array(
             'title' => 'Customize Navbar',
@@ -188,13 +205,19 @@ class AdminController extends Controller
                 $this->breadcrumbActive['customize-navbar']                                
             ],
             'customizeIsCollapsed' => false,
-            'activeListGroupItem' => 'navbar'
+            'activeListGroupItem' => 'navbar',
+            'theme' => $theme->name,
+            'header' => $theme->themeHeaderOptions[1]
         );
 
         return view('admin.customize-navbar')->with($data);
     }
 
     public function customizeHeader() {
+        $theme = Theme::where('is_active', true)->get()->first();        
+        $navItems = Navitem::orderBy('position', 'asc')->get();   
+        $headerImages = HeaderImage::all();     
+
         // Data to pass into the template
         $data = array(
             'title' => 'Customize Header',
@@ -204,13 +227,69 @@ class AdminController extends Controller
                 $this->breadcrumbActive['customize-header']                                
             ],
             'customizeIsCollapsed' => false,
-            'activeListGroupItem' => 'header'
+            'activeListGroupItem' => 'header',
+
+            'navItems' => $navItems,
+            'theme' => $theme->name,
+            'header' => $theme->themeHeaderOptions[1],
+            'headerImages' => $headerImages
         );
 
         return view('admin.customize-header')->with($data);
     }
 
+    public function customizeHeaderUpdate(Request $request) {
+        $this->validate($request, [
+            'title' => 'required',
+            'subtitle' => 'nullable',
+            'header_img' => 'nullable'  
+        ]);
+        
+        $theme = Theme::where('is_active', true)->get()->first();  
+        $themeOptions = $theme->themeHeaderOptions[1];       
+/*         
+        // Handle File Upload
+        if ($request->hasFile('header_img')) {
+            // Get file name with extension
+            $fileNameWithExt = $request->file('header_img')->getClientOriginalName();
+
+            // Get just file name
+            $filename = pathinfo($fileNameWithExt, PATHINFO_FILENAME);
+
+            // Get just extension
+            $extension = $request->file('header_img')->getClientOriginalExtension();
+
+            // Create file name to store 
+            // Add timestamp to avoid clash of identical file names
+            $fileNameToStore = $filename.'_'.time().'.'.$extension;
+
+            // Upload Image
+            $path = $request->file('header_img')->storeAs('public/header_images', $fileNameToStore);
+            
+            // eventually add again
+            //Storage::delete('public/cover_images/'.$post->cover_img);
+            $themeOptions->background_image = $fileNameToStore;
+        }
+  */
+        $themeOptions->title = $request->input('title');
+        $themeOptions->subtitle = $request->input('subtitle');
+        $themeOptions->background_image = $request->input('header_img');
+        $themeOptions->save();
+
+        // create new Activity for the newly updated Header        
+        $activity = new Activity;
+        $activity->description = 'Header updated';
+        $activity->user_id = auth()->user()->id;
+        $activity->url_title = $theme->name;
+        $activity->url_address = '/admin/customize/header';
+        $activity->save();
+
+        return redirect('/admin/customize')->with('success', 'Theme Header updated');
+    }
+
     public function customizeFooter() {
+        $theme = Theme::where('is_active', true)->get()->first(); 
+
         // Data to pass into the template
         $data = array(
             'title' => 'Customize Footer',
@@ -220,13 +299,17 @@ class AdminController extends Controller
                 $this->breadcrumbActive['customize-footer']                                
             ],
             'customizeIsCollapsed' => false,
-            'activeListGroupItem' => 'footer'
+            'activeListGroupItem' => 'footer',
+            'theme' => $theme->name,
+            'header' => $theme->themeHeaderOptions[1]
         );
 
         return view('admin.customize-footer')->with($data);
     }
 
     public function customizeThemes() {
+        $theme = Theme::where('is_active', true)->get()->first(); 
+
         // Data to pass into the template
         $data = array(
             'title' => 'Select Theme',
@@ -236,7 +319,9 @@ class AdminController extends Controller
                 $this->breadcrumbActive['customize-themes']                                
             ],
             'customizeIsCollapsed' => false,
-            'activeListGroupItem' => 'themes'
+            'activeListGroupItem' => 'themes',
+            'theme' => $theme->name,
+            'header' => $theme->themeHeaderOptions[1]
         );
 
         return view('admin.customize-themes')->with($data);

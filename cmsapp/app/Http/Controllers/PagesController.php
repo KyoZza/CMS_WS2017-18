@@ -8,6 +8,8 @@ use App\Activity;
 use App\Role;
 use App\Page;
 use App\NavItem;
+use App\Theme;
+use App\ThemeHeaderOptions;
 
 class PagesController extends Controller
 {
@@ -41,32 +43,46 @@ class PagesController extends Controller
 
 
     public function home() {
+        $theme = Theme::where('is_active', true)->get()->first();
         $page = Page::where('url', '/')->get()->first();
         $navItems = Navitem::orderBy('position', 'asc')->get();
 
         $data = [
             'page' => $page,
-            'navItems' => $navItems
+            'navItems' => $navItems,
+            'header' => $theme->themeHeaderOptions[1]
         ];
-        
-        return view('theme1.home')->with($data);
+
+        $themeName = $theme->name;
+        if($themeName == 'theme1') 
+            return view($themeName.'.home')->with($data);     
+        else  
+            return view($themeName)->with($data);     
     }
 
     // for custom pages
     public function custom($url) {
         $page = Page::where('url', '/'.$url)->get()->first();
+
         if(isset($page)) {
             if(!$page->is_published)
                 abort(404);
             else {
+                $theme = Theme::where('is_active', true)->get()->first();
                 $navItems = Navitem::orderBy('position', 'asc')->get();
                 
                 $data = [
                     'page' => $page,
-                    'navItems' => $navItems
+                    'navItems' => $navItems,
+                    'header' => $theme->themeHeaderOptions[1]
                 ];
 
-                return view('theme1.page')->with($data);                
+                $themeName = $theme->name;
+                if($themeName == 'theme1') 
+                    return view($themeName.'.page')->with($data);     
+                else  
+                    return view($themeName)->with($data);     
+                
             }
         }
         else
