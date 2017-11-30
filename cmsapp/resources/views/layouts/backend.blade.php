@@ -12,6 +12,11 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="/vendor/itsjavi/bootstrap-colorpicker/dist/css/bootstrap-colorpicker.css" rel="stylesheet">
+    @include('inc.style-admin')
+    @if(!$customizeIsCollapsed)
+        @include('inc.'.$theme.'.style') 
+    @endif
 </head>
 <body>
     <div id="app">
@@ -21,6 +26,8 @@
 
         <div class="section">
             <div class="container">
+                @include('inc.general.messages')
+            
                 <div class="row">
                     <div class="col-md-3">
                         @include('inc.menu-admin')
@@ -37,7 +44,30 @@
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}"></script>
+    
     @include('inc.general.ckeditor')
+    @include('inc.color-admin')
+    
+    <script>
+        function onHeaderTitleChange(event) {
+            const value = $(".header-form #title").val();
+            
+            $("#header-title").text(value);
+        }
 
+        function onHeaderSubTitleChange(event) {
+            const value = $(".header-form #subtitle").val();
+         
+            $("#header-subtitle").text(value);
+        }
+
+        function onHeaderImageChange(event, element) {
+            const src = element.firstElementChild.src;
+            document.getElementById('showcase').style.backgroundImage = `url(${src})`;
+
+            const image = src.replace('http://cmsapp.dev/storage/header_images/', '');
+            document.getElementById('header_img').value = image;            
+        }
+    </script>
 </body>
 </html>

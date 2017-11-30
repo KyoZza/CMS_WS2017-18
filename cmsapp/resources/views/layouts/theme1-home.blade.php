@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ app()->getLocale() }}">
+<html lang="{{ app()->getLocale() }}" class="theme1">
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -19,8 +19,10 @@
         <div id="app">
             @include('inc.theme1.header')
             <div class="main-content container">
+                @include('inc.general.messages')
                 @yield('content')                  
             </div>
+            @include('inc.theme1.footer')
 
         </div>
 

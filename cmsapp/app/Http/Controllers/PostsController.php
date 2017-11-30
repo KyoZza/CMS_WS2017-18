@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage; //for file storage
 use App\Post;
+use App\Theme;
 use App\NavItem;
 use App\Activity;
 
@@ -33,12 +34,21 @@ class PostsController extends Controller
 
         //$posts = Post::orderBy('created_at', 'desc')->take(1)->get();
         //$posts = Post::orderBy('created_at', 'desc')->get();
+
+        $theme = Theme::where('is_active', true)->get()->first();
         $posts = Post::orderBy('created_at', 'desc')->paginate(10);
-        $navItems = Navitem::orderBy('position', 'asc')->get();
+        $navItems = NavItem::orderBy('position', 'asc')->get();
         
+
+        $themeName = $theme->name;
+        if($themeName == 'theme1') 
+            $themeName = $themeName.'-main';
+    
         $data = [
             'posts' => $posts,
-            'navItems' => $navItems
+            'navItems' => $navItems,
+            'theme' => $themeName,
+            'header' => $theme->themeHeaderOptions[1]
         ];
 
         return view('posts.index')->with($data);
@@ -51,9 +61,20 @@ class PostsController extends Controller
      */
     public function create()
     {
-        $navItems = Navitem::orderBy('position', 'asc')->get();
+        $theme = Theme::where('is_active', true)->get()->first();
+        $navItems = NavItem::orderBy('position', 'asc')->get();
+
+        $themeName = $theme->name;
+        if($themeName == 'theme1') 
+            $themeName = $themeName.'-main';
         
-        return view('posts.create')->with('navItems', $navItems);
+        $data = [
+            'navItems' => $navItems,
+            'theme' => $themeName,
+            'header' => $theme->themeHeaderOptions[1]
+        ];
+        
+        return view('posts.create')->with($data);
     }
 
     /**
@@ -121,11 +142,18 @@ class PostsController extends Controller
     public function show($id)
     {
         $post = Post::find($id);
-        $navItems = Navitem::orderBy('position', 'asc')->get();
+        $theme = Theme::where('is_active', true)->get()->first();
+        $navItems = NavItem::orderBy('position', 'asc')->get();
+
+        $themeName = $theme->name;
+        if($themeName == 'theme1') 
+            $themeName = $themeName.'-main';
         
         $data = [
             'post' => $post,
-            'navItems' => $navItems
+            'navItems' => $navItems,
+            'theme' => $themeName,
+            'header' => $theme->themeHeaderOptions[1]
         ];
         
         return view('posts/show')->with($data);
@@ -147,11 +175,18 @@ class PostsController extends Controller
                 return redirect('/blog')->with('error', 'Unauthorized Page');
         }
 
-        $navItems = Navitem::orderBy('position', 'asc')->get();
+        $theme = Theme::where('is_active', true)->get()->first();
+        $navItems = NavItem::orderBy('position', 'asc')->get();
+
+        $themeName = $theme->name;
+        if($themeName == 'theme1') 
+            $themeName = $themeName.'-main';
         
         $data = [
             'post' => $post,
-            'navItems' => $navItems
+            'navItems' => $navItems,
+            'theme' => $themeName,
+            'header' => $theme->themeHeaderOptions[1]
         ];
 
         return view('posts/edit')->with($data);

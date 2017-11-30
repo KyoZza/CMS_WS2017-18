@@ -1,4 +1,4 @@
-@extends('layouts.theme1-main')
+@extends('layouts.'.$theme)
 
 @section('content')
     <h1>Blog</h1>

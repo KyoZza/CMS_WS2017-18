@@ -1,4 +1,4 @@
-@extends('layouts.theme1-main')
+@extends('layouts.'.$theme)
 
 @section('content')
     @include('inc.posts.edit')

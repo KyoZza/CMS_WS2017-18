@@ -1,4 +1,4 @@
-@extends('layouts.theme1-main')
+@extends('layouts.'.$theme)
 
 @section('content')
     @include('inc.posts.create')
@@ -10,4 +10,4 @@
 <label class="btn btn-default btn-file">
     Browse... {{Form::file('cover_img', ['style' => 'display: none'])}}
 </label>
--- >
+-->
