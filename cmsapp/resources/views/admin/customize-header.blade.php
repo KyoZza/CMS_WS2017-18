@@ -7,7 +7,7 @@
         </div>
         <div class="panel-body">
 
-            <div class="{{$theme}}">           
+            <div class="{{$theme}}  customize-frontend">           
                 @include('inc.'.$theme.'.header')
             </div>
             

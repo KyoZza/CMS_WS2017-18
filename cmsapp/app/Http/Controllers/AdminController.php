@@ -206,6 +206,7 @@ class AdminController extends Controller
             ],
             'customizeIsCollapsed' => false,
             'activeListGroupItem' => 'navbar',
+            'navItems' => $navItems,
             'theme' => $theme->name,
             'header' => $theme->themeHeaderOptions[1]
         );

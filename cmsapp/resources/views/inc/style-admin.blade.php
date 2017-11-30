@@ -5,7 +5,7 @@
         height: 470px !important;;  
     }
 
-    .theme1 .container {
+    .customize-frontend .container {
         width: 100% !important;
     }
 
@@ -34,7 +34,8 @@
         border-color: #050100b3 !important;
     }
 
-
+    /* navbar */
+    
 
     /* header customization */
     @media (min-width: 768px) {
