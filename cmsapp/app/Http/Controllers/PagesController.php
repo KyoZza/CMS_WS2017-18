@@ -52,17 +52,12 @@ class PagesController extends Controller
             'navItems' => $navItems,
             'header' => $theme->themeHeaderOptions[1]
         ];
-<<<<<<< HEAD
-        
-        return view('theme2.home')->with($data);
-=======
 
         $themeName = $theme->name;
         if($themeName == 'theme1') 
             return view($themeName.'.home')->with($data);     
         else  
             return view($themeName)->with($data);     
->>>>>>> f36ea2c930e8c4f0005a2a7d009096310754cdfc
     }
 
     // for custom pages
@@ -82,16 +77,12 @@ class PagesController extends Controller
                     'header' => $theme->themeHeaderOptions[1]
                 ];
 
-<<<<<<< HEAD
-                return view('theme2.page')->with($data);                
-=======
                 $themeName = $theme->name;
                 if($themeName == 'theme1') 
                     return view($themeName.'.page')->with($data);     
                 else  
                     return view($themeName)->with($data);     
                 
->>>>>>> f36ea2c930e8c4f0005a2a7d009096310754cdfc
             }
         }
         else

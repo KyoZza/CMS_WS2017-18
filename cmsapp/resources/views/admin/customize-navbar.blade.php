@@ -7,29 +7,80 @@
         </div>
         <div class="panel-body">
             
-            <div class="{{$theme}}-customize-navbar customize-frontend">           
-                @include('inc.'.$theme.'.navbar')
-            </div>
 
-            <br><br>
+            
+                
+                <!-- Nav tabs -->
+                <ul id="navbar-tabs" class="nav nav-tabs" role="tablist">
+                    @foreach($navItems as $navItem)
+                        @if($navItem->position == 0)
+                            <li role="presentation" class="active">
+                        @else
+                            <li role="presentation">
+                        @endif
+                                <a href="#{{$navItem->title}}" aria-controls="{{$navItem->title}}" role="tab" data-toggle="tab">{{$navItem->title}}</a>
+                            </li>
+                    @endforeach
+                </ul>
+                
+                <br>
+                <!-- Tab panes -->
+                <div class="tab-content">
+                    @foreach($navItems as $navItem)
+                        @if($navItem->position == 0)
+                            <div role="tabpanel" class="tab-pane active" id="{{$navItem->title}}">
+                        @else
+                            <div role="tabpanel" class="tab-pane" id="{{$navItem->title}}">
+                        @endif
+                                {!! Form::open(['action' => ['AdminController@customizeNavbarUpdate', $navItem->id], 'method' => 'POST']) !!}
 
-            {!! Form::open(['action' => ['AdminController@customizeHeaderUpdate'], 'method' => 'POST', 'enctype' => 'multipart/form-data', 'class' => 'header-form']) !!}
-                <div class="form-group">
-                    {{Form::label('navbar-color', 'Navbar Color')}}
-                    {{Form::text('navbar-color', '', ['class' => 'form-control', 'placeholder' => '', 'onkeyup'=> 'onNavbarColorChange(event);'])}}
-                </div>
-                <div class="form-group">
-                    {{Form::label('font-color', 'Font-Color')}}
-                    {{Form::text('font-color', '', ['class' => 'form-control', 'placeholder' => '', 'onkeyup'=> 'onNavbarFontColorChange(event);'])}}
-                </div>
-                <div class="form-group">
-                    {{Form::label('hover-color', 'Font-Color')}}
-                    {{Form::text('hover-color', '', ['class' => 'form-control', 'placeholder' => '', 'onkeyup'=> 'onNavbarHoverColorChange(event);'])}}
-                </div>
+                                    <div class="form-group">
+                                        {{Form::label('navitem-title', 'Title')}}
+                                        {{Form::text('navitem-title', $navItem->title, ['class' => 'form-control'/*, 'onkeyup'=> 'onNavbarTitleChange(event);'*/])}}
+                                    </div>
+                                    <div class="form-group">
+                                        {{Form::label('navitem-link', 'Link')}}
+                                        @if($navItem->link == '/blog')
+                                            {{Form::text('navitem-link', $navItem->link, ['class' => 'form-control', 'deactivated'])}}
+                                        @else
+                                            {{Form::text('navitem-link', $navItem->link, ['class' => 'form-control'])}}
+                                        @endif
+                                        
+                                        <br>
+                                        <select class="form-control" onchange="onNavbarPageChange(event);">
+                                            @foreach($pages as $page)
+                                                @if($page->url == $navItem->link)
+                                                    <option value="{{$page->url}}" selected>
+                                                @else
+                                                    <option value="{{$page->url}}">
+                                                @endif
+                                                        {{$page->title}}</option>
+                                            @endforeach
 
-                {{Form::hidden('_method', 'PUT')}} <!-- To spoof a PUT request instead of POST -->
-                {{Form::submit('Submit', ['class' => 'btn btn-primary'])}}
-            {!! Form::close() !!}
+
+                                            @if($navItem->link == '/blog')
+                                                    <option value="/blog" selected>
+                                            @else
+                                                    <option value="/blog">
+                                            @endif
+                                                        Blog</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        {{Form::label('navitem-position', 'Position')}}
+                                        {{Form::text('navitem-position', $navItem->position, ['class' => 'form-control', 'onkeyup'=> 'onNavbarPositionChange(event);'])}}
+                                    </div>
+
+                                    {{Form::hidden('_method', 'PUT')}} <!-- To spoof a PUT request instead of POST -->
+                                    {{Form::submit('Submit', ['class' => 'btn btn-primary'])}}
+                                {!! Form::close() !!}
+
+                            </div>
+                    @endforeach
+                </div>
+            
+                
+                
         </div>
     </div>
 @endsection

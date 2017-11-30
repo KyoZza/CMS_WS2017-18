@@ -194,7 +194,15 @@ class AdminController extends Controller
 
     public function customizeNavbar() {
         $theme = Theme::where('is_active', true)->get()->first();        
-        $navItems = Navitem::orderBy('position', 'asc')->get();   
+        $navItems = Navitem::orderBy('position', 'asc')->get();  
+        
+        $pages = Page::all(); 
+        $pageOptions = array();
+        foreach ($pages as $page) {
+            //$array = array(''.$role->id => $role->name);     
+            //array_push($roleOptions, $array);
+            $pageOptions[''.$page->id] = $page->name;
+        }
 
         // Data to pass into the template
         $data = array(
@@ -208,10 +216,59 @@ class AdminController extends Controller
             'activeListGroupItem' => 'navbar',
             'navItems' => $navItems,
             'theme' => $theme->name,
-            'header' => $theme->themeHeaderOptions[1]
+            'header' => $theme->themeHeaderOptions[1],
+            'pages' => $pages,
+            'pageOptions' => $pageOptions
         );
 
         return view('admin.customize-navbar')->with($data);
+    }
+
+    public function customizeNavbarUpdate(Request $request, $id) {
+        $this->validate($request, [
+            'navitem-title' => 'required',
+            'navitem-link' => 'required',
+            'navitem-position' => 'required'  
+        ]);
+        
+        $navItem = NavItem::find($id);
+        
+        $newPosition = $request->input('navitem-position');
+        if ($newPosition > $navItem->position) {
+            $navItems = NavItem::where('position', '<=', $newPosition)->where('title', '!=', $navItem->title)->get();
+
+            // reorder the navItems
+            foreach ($navItems as $key => $updateItem) {
+                $updateItem->position = $key;
+                $updateItem->save();
+            }
+
+            $navItem->position = $newPosition;
+        }
+        else if ($newPosition < $navItem->position) {
+            $navItems = NavItem::where('position', '>=', $newPosition)->where('title', '!=', $navItem->title)->get();
+
+            // reorder the navItems
+            foreach ($navItems as $key => $updateItem) {
+                $updateItem->position = $updateItem->position + 1;
+                $updateItem->save();
+            }
+
+            $navItem->position = $newPosition;
+        }
+
+        $navItem->title = $request->input('navitem-title');
+        $navItem->link = $request->input('navitem-link');
+        $navItem->save();
+       
+        $activity = new Activity;
+        $activity->description = 'Navbar updated';
+        $activity->user_id = auth()->user()->id;
+        $activity->url_title = 'Customize Navbar';
+        $activity->url_address = '/admin/customize/navbar';
+        $activity->save();
+
+        return redirect('/admin/customize/navbar')->with('success', 'Navbar updated');
     }
 
     public function customizeHeader() {
@@ -279,9 +336,9 @@ class AdminController extends Controller
 
         // create new Activity for the newly updated Header        
         $activity = new Activity;
-        $activity->description = 'Header updated';
+        $activity->description = $theme->name.'Header updated';
         $activity->user_id = auth()->user()->id;
-        $activity->url_title = $theme->name;
+        $activity->url_title = 'Customize Header';
         $activity->url_address = '/admin/customize/header';
         $activity->save();
 
