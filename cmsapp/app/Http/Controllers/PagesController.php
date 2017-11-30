@@ -49,7 +49,7 @@ class PagesController extends Controller
             'navItems' => $navItems
         ];
         
-        return view('theme1.home')->with($data);
+        return view('theme2.home')->with($data);
     }
 
     // for custom pages
@@ -66,7 +66,7 @@ class PagesController extends Controller
                     'navItems' => $navItems
                 ];
 
-                return view('theme1.page')->with($data);                
+                return view('theme2.page')->with($data);                
             }
         }
         else
