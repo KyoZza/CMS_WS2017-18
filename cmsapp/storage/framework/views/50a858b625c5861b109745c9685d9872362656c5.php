@@ -65,7 +65,7 @@
                                             <?php if($navItem->link == '/blog'): ?>
                                                     <option value="/blog" selected>
                                             <?php else: ?>
-                                                    <option value="/blog'">
+                                                    <option value="/blog">
                                             <?php endif; ?>
                                                         Blog</option>
                                         </select>

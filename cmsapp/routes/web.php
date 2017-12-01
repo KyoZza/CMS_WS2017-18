@@ -28,6 +28,7 @@ Route::get('/admin', 'AdminController@index');
 // customizing
 Route::get('/admin/customize', 'AdminController@customize');
 Route::get('/admin/customize/general', 'AdminController@customizeGeneral');
+Route::put('/admin/customize/general', 'AdminController@customizeGeneralUpdate');
 Route::get('/admin/customize/navbar', 'AdminController@customizeNavbar');
 Route::put('/admin/customize/navbar/{id}', 'AdminController@customizeNavbarUpdate');
 Route::get('/admin/customize/header', 'AdminController@customizeHeader');

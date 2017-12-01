@@ -22,10 +22,12 @@ class DatabaseSeeder extends Seeder
 
         $this->call(NavItemTableSeeder::class); */
 
-        $this->call(ThemeTableSeeder::class);
+        /* $this->call(ThemeTableSeeder::class);
         $this->call(ThemeHeaderOptionsTableSeeder::class);
-        $this->call(HeaderImageTableSeeder::class);
+        $this->call(HeaderImageTableSeeder::class); */
         
+        $this->call(ThemeColorTableSeeder::class);
         
+        //Uncomment the seeds you need!!
     }
 }
