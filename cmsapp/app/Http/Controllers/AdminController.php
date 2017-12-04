@@ -12,6 +12,7 @@ use App\NavItem;
 use App\Theme;
 use App\ThemeHeaderOptions;
 use App\HeaderImage;
+use App\ThemeColor;
 
 
 
@@ -173,7 +174,8 @@ class AdminController extends Controller
     }
 
     public function customizeGeneral() {
-        $theme = Theme::where('is_active', true)->get()->first();     
+        $theme = Theme::where('is_active', true)->get()->first();  
+        $themeColors = ThemeColor::all();   
 
         // Data to pass into the template
         $data = array(
@@ -186,10 +188,32 @@ class AdminController extends Controller
             'customizeIsCollapsed' => false,
             'activeListGroupItem' => 'general',
             'theme' => $theme->name,
-            'header' => $theme->themeHeaderOptions[1]
+            'header' => $theme->themeHeaderOptions[1],
+            'themeColors' => $themeColors
         );
 
         return view('admin.customize-general')->with($data);
+    }
+
+    public function customizeGeneralUpdate(Request $request) {
+        $this->validate($request, [
+            'theme-color' => 'required',
+        ]);
+        
+        $themeColorId = $request->input('theme-color');
+        $currentlyActiveThemeColor = ThemeColor::where('is_active', true)->get();
+        $newActiveThemeColor = ThemeColor::find($themeColorId);
+        
+        //
+       
+        $activity = new Activity;
+        $activity->description = 'General options updated';
+        $activity->user_id = auth()->user()->id;
+        $activity->url_title = 'General Customization';
+        $activity->url_address = '/admin/customize/general';
+        $activity->save();
+
+        return redirect('/admin/customize/navbar')->with('success', 'General options updated');
     }
 
     public function customizeNavbar() {

@@ -88,6 +88,10 @@
             $(".tab-pane.active #navitem-link").val(value);
         }
 
+        function onThemeColorChange(event, colorId) {
+            document.getElementById('theme_color').value = colorId;
+        }
+
     </script>
 
     <script>
