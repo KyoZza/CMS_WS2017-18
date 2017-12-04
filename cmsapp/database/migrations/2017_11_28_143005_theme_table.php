@@ -16,7 +16,7 @@ class ThemeTable extends Migration
         Schema::create('themes', function (Blueprint $table) {
             $table->increments('id');
             $table->string("name");
-            $table->bool("is_active");
+            $table->boolean("is_active");
             $table->timestamps();
         });
     }
