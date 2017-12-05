@@ -31,8 +31,10 @@
                      eventuell mit vorgebenen fonts aus der DB füllen -->
                 <div class="form-group">                
                     {{Form::label('font_family', 'Font')}}
-                    <select class="form-control" name="font_family">     
-                        <option value='"Raleway", sans-serif'>Raleway</option>
+                    <select class="form-control" name="font_family">
+                    @foreach($fonts as $font)
+                        <option value="{{$font->css}}">{{$font->name}}</option>   
+                    @endforeach
                     </select>
                 </div>
 

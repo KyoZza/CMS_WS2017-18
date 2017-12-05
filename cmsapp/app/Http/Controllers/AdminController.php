@@ -13,7 +13,7 @@ use App\Theme;
 use App\ThemeHeaderOptions;
 use App\HeaderImage;
 use App\ThemeColor;
-
+use App\Fonts;
 
 
 class AdminController extends Controller
@@ -176,7 +176,7 @@ class AdminController extends Controller
     public function customizeGeneral() {
         $theme = Theme::where('is_active', true)->get()->first();  
         $themeColors = ThemeColor::all();   
-
+        $fonts = Fonts::all();
         // Data to pass into the template
         $data = array(
             'title' => 'General Customization',
@@ -189,7 +189,8 @@ class AdminController extends Controller
             'activeListGroupItem' => 'general',
             'theme' => $theme->name,
             'header' => $theme->themeHeaderOptions[1],
-            'themeColors' => $themeColors
+            'themeColors' => $themeColors,
+            'fonts' => $fonts
         );
 
         return view('admin.customize-general')->with($data);
