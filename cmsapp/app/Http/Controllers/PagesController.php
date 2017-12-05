@@ -57,7 +57,7 @@ class PagesController extends Controller
         if($themeName == 'theme1') 
             return view($themeName.'.home')->with($data);     
         else  
-            return view($themeName)->with($data);     
+            return view($themeName.'.page')->with($data);     
     }
 
     // for custom pages
@@ -78,11 +78,8 @@ class PagesController extends Controller
                 ];
 
                 $themeName = $theme->name;
-                if($themeName == 'theme1') 
-                    return view($themeName.'.page')->with($data);     
-                else  
-                    return view($themeName)->with($data);     
                 
+                return view($themeName.'.page')->with($data);           
             }
         }
         else
