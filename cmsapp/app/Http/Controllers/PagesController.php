@@ -10,6 +10,9 @@ use App\Page;
 use App\NavItem;
 use App\Theme;
 use App\ThemeHeaderOptions;
+use App;
+use Session;
+use Config;
 
 class PagesController extends Controller
 {
@@ -42,16 +45,30 @@ class PagesController extends Controller
 
 
 
-    public function home() {
+    public function home(Request $request) {
+
+        $locale = substr($request->server('HTTP_ACCEPT_LANGUAGE'), 0, 2);
+        //return $locale;
+
         $theme = Theme::where('is_active', true)->get()->first();
-        $page = Page::where('url', '/')->get()->first();
-        $navItems = Navitem::orderBy('position', 'asc')->get();
+        
+        if($locale == 'de'){
+            $page = Page::where('url', '/de')->get()->first();
+            $navItems = Navitem::orderBy('position', 'asc')->where('language', 'de')->get();
+        }
+        else{
+            $page = Page::where('url', '/')->get()->first();
+            $navItems = Navitem::orderBy('position', 'asc')->where('language', 'en')->get();
+        }
+       
+        
 
         $data = [
             'page' => $page,
             'navItems' => $navItems,
             'header' => $theme->themeHeaderOptions[1]
         ];
+
 
         $themeName = $theme->name;
         if($themeName == 'theme1') 

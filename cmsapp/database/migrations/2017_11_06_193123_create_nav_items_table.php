@@ -19,6 +19,7 @@ class CreateNavItemsTable extends Migration
             $table->integer('position');
             $table->string('link');
             $table->timestamps();
+            $table->string('language');
         });
     }
 

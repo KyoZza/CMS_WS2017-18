@@ -30,6 +30,12 @@
         <script src="{{ asset('js/app.js') }}"></script>
         @include('inc.theme1.script')
         @include('inc.general.ckeditor')
+        <!--language local storage-->
+        <script>
+
+        
+
+        </script>
 
     </body>
 </html>
