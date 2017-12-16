@@ -27,7 +27,11 @@ class DatabaseSeeder extends Seeder
         $this->call(HeaderImageTableSeeder::class);
         
         $this->call(ThemeColorTableSeeder::class);*/
-        $this->call(FontsTableSeeder::class);
+        //$this->call(FontsTableSeeder::class);
+
+        $this->call(GeneralOptionsSeeder::class);
+        
+
         //Uncomment the seeds you need!!
     }
 }

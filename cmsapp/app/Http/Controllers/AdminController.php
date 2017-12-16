@@ -198,7 +198,9 @@ class AdminController extends Controller
 
     public function customizeGeneralUpdate(Request $request) {
         $this->validate($request, [
-            'theme-color' => 'required',
+            'theme_color' => 'required',
+            'font_family' => 'required',
+            'font_size' => 'required',
         ]);
         
         $themeColorId = $request->input('theme-color');

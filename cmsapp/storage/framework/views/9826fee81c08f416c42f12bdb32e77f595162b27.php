@@ -3,9 +3,15 @@
         <div class="row">
             <div class="col-md-10">
                 <h1>
-                    <i class="fa fa-<?php echo e($icon); ?>" aria-hidden="true"></i>
-                     <?php echo e($title); ?>
+                    <?php if(auth::user()): ?>
+                        <i class="fa fa-<?php echo e($icon); ?>" aria-hidden="true"></i>
+                        <?php echo e($title); ?>
 
+                    <?php else: ?>
+                        <i class="fa fa-user" aria-hidden="true"></i>
+                        Sign In
+                    <?php endif; ?>
+                    
                 </h1>
             </div>
             <?php if(auth::user()): ?>

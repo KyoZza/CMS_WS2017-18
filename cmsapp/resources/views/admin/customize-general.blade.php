@@ -33,7 +33,7 @@
                     {{Form::label('font_family', 'Font')}}
                     <select class="form-control" name="font_family">
                     @foreach($fonts as $font)
-                        <option value="{{$font->css}}">{{$font->name}}</option>   
+                        <option value="{{$font->id}}">{{$font->name}}</option>   
                     @endforeach
                     </select>
                 </div>
