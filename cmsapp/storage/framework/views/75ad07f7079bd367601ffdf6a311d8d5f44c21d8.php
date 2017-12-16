@@ -30,6 +30,12 @@
         <script src="<?php echo e(asset('js/app.js')); ?>"></script>
         <?php echo $__env->make('inc.theme1.script', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
         <?php echo $__env->make('inc.general.ckeditor', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+        <!--language local storage-->
+        <script>
+
+        
+
+        </script>
 
     </body>
 </html>

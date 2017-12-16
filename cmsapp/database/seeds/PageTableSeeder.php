@@ -29,5 +29,18 @@ class PageTableSeeder extends Seeder
         $page2->url = '/about';
         $page2->user_id = 3;
         $page2->save();
+
+
+        $page3 = new Page;
+        $page3->title = 'Die drei Federn';
+        $page3->body = 'Es war einmal ein König, der hatte drei Söhne, davon waren zwei klug und gescheit, aber der dritte sprach nicht viel, war einfältig und hieß nur der Dummling. Als der König alt und schwach ward und an sein Ende dachte, wußte er nicht, welcher von seinen Söhnen nach ihm das Reich erben sollte. Da sprach er zu ihnen: "Zieht aus, und wer mir den feinsten Teppich bringt, der soll nach meinem Tod König sein." Und damit es keinen Streit unter ihnen gab, führte er sie vor sein Schloß, blies drei Federn in die Luft und sprach: "Wie die fliegen, so sollt ihr ziehen." Die eine Feder flog nach Osten, die andere nach Westen, die dritte flog aber geradeaus, und flog nicht weit, sondern fiel bald zur Erde. Nun ging der eine Bruder rechts, der andere ging links, und sie lachten den Dummling aus, der bei der dritten Feder, da, wo sie niedergefallen war, bleiben mußte.
+        
+        Der Dummling setzte sich nieder und war traurig. Da bemerkte er auf einmal, daß neben der Feder eine Falltüre lag. Er hob sie in die Höhe, fand eine Treppe und stieg hinab. Da kam er vor eine andere Türe,...';
+        $page3->is_published = true;
+        $page3->url = '/de';
+        $page3->user_id = 4;
+        $page3->save();
+
+
     }
 }

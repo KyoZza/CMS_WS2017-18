@@ -21,6 +21,7 @@ class UserTableSeeder extends Seeder
         $user1->name = 'Yamcha';
         $user1->email = 'yamcha@cms.com’';
         $user1->password = bcrypt('secret');
+        $user1->theme_color = '#552211';
         $user1->save();
         $user1->roles()->attach($role_user);
     
@@ -28,6 +29,7 @@ class UserTableSeeder extends Seeder
         $user2->name = 'Muten Roshi';
         $user2->email = 'roshi@cms.com';
         $user2->password = bcrypt('secret');
+        $user2->theme_color = '#552211';
         $user2->save();
         $user2->roles()->attach($role_website_manager);
         
@@ -35,6 +37,7 @@ class UserTableSeeder extends Seeder
         $user3->name = 'Son Goku';
         $user3->email = 'kakarot@cms.com';
         $user3->password = bcrypt('secret');
+        $user3->theme_color = '#552211';
         $user3->save();
         $user3->roles()->attach($role_super_saiyajin);
     }
