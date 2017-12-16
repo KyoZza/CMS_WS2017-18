@@ -1,6 +1,45 @@
 <style>
+    /*** dynamic styles loaded from database ***/
+
+    /*http://fonts.googleapis.com/css?family=Roboto*/
+    @import url({{$font->url}});@charset "UTF-8";
+
+    
     .theme1 body {
+        font-family: {!!$font->css!!};        
         margin-bottom: 0;
+    }
+
+    .theme1 .body-fontSize {
+        font-size: {{$themeOptions->font_size}}px;
+    }
+
+    .theme1 .themeColor-standard {
+        background-color: {{$themeColor->standard}} !important;
+        color: {{$themeColor->dark_text}} !important;
+    }
+
+    .theme1 .themeColor-light {
+        background-color: {{$themeColor->light}} !important;
+        color: {{$themeColor->dark_text}} !important;
+    }
+
+    .theme1 .themeColor-dark {
+        background-color: {{$themeColor->dark}} !important;
+        color: {{$themeColor->light_text}} !important;
+    }
+
+    .theme1 a {
+        color: {{$themeColor->standard}};
+    }
+
+    .theme1 a:hover {
+        color: {{$themeColor->dark}} !important;
+    }
+
+    .theme1 #footer-upper {
+        border-bottom: 100px solid {{$themeColor->dark}}; 
+        border-left: 97vw solid transparent;
     }
 
     /* Styles for fullpage header */
@@ -15,6 +54,10 @@
         justify-content: flex-end;
     }
 
+
+    /*** !!!Static styles!!! ***/
+
+    /* Styles for fullpage header */ 
     .theme1 #showcase .well {
         background-color: #fffefe33;
         border: none !important;
@@ -90,11 +133,6 @@
         background-color: #333;
         color: #fff;
         width: 100%;
-    }
-
-    .theme1 #footer-upper {
-        border-bottom: 100px solid #333; 
-        border-left: 97vw solid transparent;
     }
 
     .theme1 .footer-icon-a {

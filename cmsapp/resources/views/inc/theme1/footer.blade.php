@@ -1,6 +1,6 @@
 <footer>
     <div id="footer-upper"></div>
-    <div id="footer-content">
+    <div id="footer-content" class="themeColor-dark">
         <div class="container">
             <br>
             <div class="row">

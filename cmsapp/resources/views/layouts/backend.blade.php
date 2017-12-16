@@ -14,7 +14,7 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="/vendor/itsjavi/bootstrap-colorpicker/dist/css/bootstrap-colorpicker.css" rel="stylesheet">
     @include('inc.style-admin')
-    @if(!$customizeIsCollapsed)
+    @if($activeListGroupItem == 'header')
         @include('inc.'.$theme.'.style') 
     @endif
 </head>
@@ -89,6 +89,9 @@
         }
 
         function onThemeColorChange(event, colorId) {
+            $(".thumbnail.active").removeClass('active');
+            $(event.target.parentNode).addClass('active');
+            
             document.getElementById('theme_color').value = colorId;
         }
 

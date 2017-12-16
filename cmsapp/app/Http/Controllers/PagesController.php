@@ -10,6 +10,9 @@ use App\Page;
 use App\NavItem;
 use App\Theme;
 use App\ThemeHeaderOptions;
+use App\GeneralOptions;
+use App\Fonts;
+use App\ThemeColor;
 use App;
 use Session;
 use Config;
@@ -46,9 +49,7 @@ class PagesController extends Controller
 
 
     public function home(Request $request) {
-
         $locale = substr($request->server('HTTP_ACCEPT_LANGUAGE'), 0, 2);
-        //return $locale;
 
         $theme = Theme::where('is_active', true)->get()->first();
         
@@ -60,13 +61,20 @@ class PagesController extends Controller
             $page = Page::where('url', '/')->get()->first();
             $navItems = Navitem::orderBy('position', 'asc')->where('language', 'en')->get();
         }
-       
+
+        $themeOptions = GeneralOptions::where('theme', 'custom')->get()->first();
+        $font = Fonts::find($themeOptions->fonts_id);
+        $themeColor = ThemeColor::find($themeOptions->theme_colors_id);
+        
         
 
         $data = [
             'page' => $page,
             'navItems' => $navItems,
-            'header' => $theme->themeHeaderOptions[1]
+            'header' => $theme->themeHeaderOptions[1],
+            'themeOptions' => $themeOptions,   
+            'font' => $font,
+            'themeColor' => $themeColor
         ];
 
 
@@ -79,6 +87,7 @@ class PagesController extends Controller
 
     // for custom pages
     public function custom($url) {
+        // take care of localization here as well!!!
         $page = Page::where('url', '/'.$url)->get()->first();
 
         if(isset($page)) {
@@ -87,11 +96,18 @@ class PagesController extends Controller
             else {
                 $theme = Theme::where('is_active', true)->get()->first();
                 $navItems = Navitem::orderBy('position', 'asc')->get();
-                
+                $themeOptions = GeneralOptions::where('theme', 'custom')->get()->first();
+                $font = Fonts::find($themeOptions->fonts_id);
+                $themeColor = ThemeColor::find($themeOptions->theme_colors_id);
+        
+
                 $data = [
                     'page' => $page,
                     'navItems' => $navItems,
-                    'header' => $theme->themeHeaderOptions[1]
+                    'header' => $theme->themeHeaderOptions[1],
+                    'themeOptions' => $themeOptions,   
+                    'font' => $font,
+                    'themeColor' => $themeColor
                 ];
 
                 $themeName = $theme->name;

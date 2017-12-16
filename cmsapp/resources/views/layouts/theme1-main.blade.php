@@ -18,7 +18,7 @@
     <body>
         <div id="app">
             @include('inc.theme1.header-slim')
-            <div class="main-content container">
+            <div class="main-content container body-fontSize">
                 @include('inc.general.messages')
                 @yield('content')                  
             </div>

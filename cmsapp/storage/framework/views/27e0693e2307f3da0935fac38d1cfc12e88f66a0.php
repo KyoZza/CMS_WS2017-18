@@ -1,6 +1,45 @@
 <style>
+    /*** dynamic styles loaded from database ***/
+
+    /*http://fonts.googleapis.com/css?family=Roboto*/
+    @import  url(<?php echo e($font->url); ?>);@charset  "UTF-8";
+
+    
     .theme1 body {
+        font-family: <?php echo $font->css; ?>;        
         margin-bottom: 0;
+    }
+
+    .theme1 .body-fontSize {
+        font-size: <?php echo e($themeOptions->font_size); ?>px;
+    }
+
+    .theme1 .themeColor-standard {
+        background-color: <?php echo e($themeColor->standard); ?> !important;
+        color: <?php echo e($themeColor->dark_text); ?> !important;
+    }
+
+    .theme1 .themeColor-light {
+        background-color: <?php echo e($themeColor->light); ?> !important;
+        color: <?php echo e($themeColor->dark_text); ?> !important;
+    }
+
+    .theme1 .themeColor-dark {
+        background-color: <?php echo e($themeColor->dark); ?> !important;
+        color: <?php echo e($themeColor->light_text); ?> !important;
+    }
+
+    .theme1 a {
+        color: <?php echo e($themeColor->standard); ?>;
+    }
+
+    .theme1 a:hover {
+        color: <?php echo e($themeColor->dark); ?> !important;
+    }
+
+    .theme1 #footer-upper {
+        border-bottom: 100px solid <?php echo e($themeColor->dark); ?>; 
+        border-left: 97vw solid transparent;
     }
 
     /* Styles for fullpage header */
@@ -15,6 +54,10 @@
         justify-content: flex-end;
     }
 
+
+    /*** !!!Static styles!!! ***/
+
+    /* Styles for fullpage header */ 
     .theme1 #showcase .well {
         background-color: #fffefe33;
         border: none !important;
@@ -90,11 +133,6 @@
         background-color: #333;
         color: #fff;
         width: 100%;
-    }
-
-    .theme1 #footer-upper {
-        border-bottom: 100px solid #333; 
-        border-left: 97vw solid transparent;
     }
 
     .theme1 .footer-icon-a {
