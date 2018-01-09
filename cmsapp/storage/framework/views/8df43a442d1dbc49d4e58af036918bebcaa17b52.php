@@ -10,7 +10,7 @@
     <div class="form-group">
         <?php echo e(Form::label('body', 'Body')); ?>
 
-        <?php echo e(Form::textarea('body', '', ['class' => 'form-control', 'placeholder' => 'Body Text', 'id' => 'article-ckeditor'])); ?>
+        <?php echo e(Form::textarea('body', '', ['class' => 'form-control', 'placeholder' => 'Body Text', 'id' => 'article-ckeditor-body'])); ?>
 
     </div>
     <div class="form-group">

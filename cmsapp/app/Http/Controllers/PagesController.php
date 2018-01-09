@@ -53,46 +53,81 @@ class PagesController extends Controller
         $theme = Theme::where('is_active', true)->get()->first();
         
         if($locale == 'de'){
-            $page = Page::where('url', '/de')->get()->first();
+            $page = Page::where('language', 'de')->get()->first();
             $navItems = Navitem::orderBy('position', 'asc')->where('language', 'de')->get();
         }
         else{
-            $page = Page::where('url', '/')->get()->first();
+            $page = Page::where('language', 'en')->get()->first();
             $navItems = Navitem::orderBy('position', 'asc')->where('language', 'en')->get();
         }
        
-        
+        $themeoption = 0;
+        if($locale == 'en'){
+            $themeoption = 1;
+        }
+        else
+            $themeoption =3;
 
         $data = [
             'page' => $page,
             'navItems' => $navItems,
-            'header' => $theme->themeHeaderOptions[1]
+            'header' => $theme->themeHeaderOptions[$themeoption]
         ];
 
 
+        //HILFE mit den Themes :)
         $themeName = $theme->name;
-        if($themeName == 'theme1') 
-            return view($themeName.'.home')->with($data);     
-        else  
-            return view($themeName.'.page')->with($data);     
+        if($locale ==  'en') {
+            if($themeName == 'theme1') 
+                return view($themeName.'.home')->with($data);     
+            else  
+                return view($themeName.'.page')->with($data);    
+            }
+            else{
+                if($themeName == 'theme1') 
+                return view($themeName.'.home')->with($data);     
+            else  
+                return view($themeName.'.page')->with($data);    
+            
+        } 
     }
 
     // for custom pages
-    public function custom($url) {
-        $page = Page::where('url', '/'.$url)->get()->first();
+    public function custom(Request $request, $url) {
+        $locale = substr($request->server('HTTP_ACCEPT_LANGUAGE'), 0, 2);
+        //return $locale;
+        if($locale == 'de'){
+            $page = Page::where('url', '/'.$url)->where('language', 'de')->get()->first();
+            $navItems = Navitem::orderBy('position', 'asc')->where('language', 'de')->get();
+        }
+        else{
+            $page = Page::where('url', '/'.$url)->where('language', 'en')->get()->first();
+            $navItems = Navitem::orderBy('position', 'asc')->where('language', 'en')->get();
+        }
 
         if(isset($page)) {
             if(!$page->is_published)
                 abort(404);
             else {
-                $theme = Theme::where('is_active', true)->get()->first();
-                $navItems = Navitem::orderBy('position', 'asc')->get();
                 
+        
+                $theme = Theme::where('is_active', true)->get()->first();
+                
+                
+               
+                $themeoption = 0;
+                if($locale == 'en'){
+                    $themeoption = 1;
+                }
+                else
+                    $themeoption =3;
+        
                 $data = [
                     'page' => $page,
                     'navItems' => $navItems,
-                    'header' => $theme->themeHeaderOptions[1]
+                    'header' => $theme->themeHeaderOptions[$themeoption]
                 ];
+        ;
 
                 $themeName = $theme->name;
                 
@@ -109,9 +144,15 @@ class PagesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $pages = Page::all();
+
+        $locale = substr($request->server('HTTP_ACCEPT_LANGUAGE'), 0, 2);
+        if($locale == 'de'){
+            $pages = Page::where('language', 'de')->get();
+        }
+        else
+            $pages = Page::where('language', 'en')->get();
         
         // Data to pass into the template
         $data = array(
@@ -170,7 +211,9 @@ class PagesController extends Controller
         $this->validate($request, [
             'title' => 'required',
             'body' => 'required',
-            'url' => 'required'
+            'url' => 'required',
+            'bodyde' => 'required'
+
         ]);
 
         // create new Page to store
@@ -180,7 +223,17 @@ class PagesController extends Controller
         $page->user_id = auth()->user()->id;
         $page->url = $request->input('url');
         $page->is_published = $request->input('is_published') !== null;
+        $page->language = 'en';
         $page->save();
+
+        $pagede = new Page;
+        $pagede->title = $request->input('titlede');
+        $pagede->body = $request->input('bodyde');
+        $pagede->user_id = auth()->user()->id;
+        $pagede->url = $request->input('url');
+        $pagede->is_published = $request->input('is_published') !== null;
+        $pagede->language = 'de';
+        $pagede->save();
 
         // create new Activity for the newly stored Page        
         $activity = new Activity;

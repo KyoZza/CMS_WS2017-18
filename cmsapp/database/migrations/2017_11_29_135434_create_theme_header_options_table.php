@@ -21,6 +21,7 @@ class CreateThemeHeaderOptionsTable extends Migration
             $table->string('title');
             $table->string('subtitle');
             $table->timestamps();
+            $table->string('language');
         });
     }
 

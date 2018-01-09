@@ -27,7 +27,7 @@ class PostsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         //$posts = Post::all();
         //$posts = Post::where('title', 'Post Two')->get();
@@ -37,7 +37,27 @@ class PostsController extends Controller
 
         $theme = Theme::where('is_active', true)->get()->first();
         $posts = Post::orderBy('created_at', 'desc')->paginate(10);
-        $navItems = NavItem::orderBy('position', 'asc')->get();
+
+        $locale = substr($request->server('HTTP_ACCEPT_LANGUAGE'), 0, 2);
+        //return $locale;
+
+        $theme = Theme::where('is_active', true)->get()->first();
+        
+        if($locale == 'de'){
+            
+            $navItems = Navitem::orderBy('position', 'asc')->where('language', 'de')->get();
+        }
+        else{
+            
+            $navItems = Navitem::orderBy('position', 'asc')->where('language', 'en')->get();
+        }
+       
+        $themeoption = 0;
+        if($locale == 'en'){
+            $themeoption = 1;
+        }
+        else
+            $themeoption = 3;
         
 
         $themeName = $theme->name;
@@ -48,7 +68,7 @@ class PostsController extends Controller
             'posts' => $posts,
             'navItems' => $navItems,
             'theme' => $themeName,
-            'header' => $theme->themeHeaderOptions[1]
+            'header' => $theme->themeHeaderOptions[$themeoption]
         ];
 
         return view('posts.index')->with($data);
@@ -59,10 +79,31 @@ class PostsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
         $theme = Theme::where('is_active', true)->get()->first();
-        $navItems = NavItem::orderBy('position', 'asc')->get();
+        $posts = Post::orderBy('created_at', 'desc')->paginate(10);
+
+        $locale = substr($request->server('HTTP_ACCEPT_LANGUAGE'), 0, 2);
+        //return $locale;
+
+        $theme = Theme::where('is_active', true)->get()->first();
+        
+        if($locale == 'de'){
+            
+            $navItems = Navitem::orderBy('position', 'asc')->where('language', 'de')->get();
+        }
+        else{
+            
+            $navItems = Navitem::orderBy('position', 'asc')->where('language', 'en')->get();
+        }
+       
+        $themeoption = 0;
+        if($locale == 'en'){
+            $themeoption = 1;
+        }
+        else
+            $themeoption = 3;
 
         $themeName = $theme->name;
         if($themeName == 'theme1') 
@@ -71,7 +112,7 @@ class PostsController extends Controller
         $data = [
             'navItems' => $navItems,
             'theme' => $themeName,
-            'header' => $theme->themeHeaderOptions[1]
+            'header' => $theme->themeHeaderOptions[$themeoption]
         ];
         
         return view('posts.create')->with($data);
@@ -139,11 +180,33 @@ class PostsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Request $request, $id)
     {
         $post = Post::find($id);
+       
         $theme = Theme::where('is_active', true)->get()->first();
-        $navItems = NavItem::orderBy('position', 'asc')->get();
+        $posts = Post::orderBy('created_at', 'desc')->paginate(10);
+
+        $locale = substr($request->server('HTTP_ACCEPT_LANGUAGE'), 0, 2);
+        //return $locale;
+
+        $theme = Theme::where('is_active', true)->get()->first();
+        
+        if($locale == 'de'){
+            
+            $navItems = Navitem::orderBy('position', 'asc')->where('language', 'de')->get();
+        }
+        else{
+            
+            $navItems = Navitem::orderBy('position', 'asc')->where('language', 'en')->get();
+        }
+       
+        $themeoption = 0;
+        if($locale == 'en'){
+            $themeoption = 1;
+        }
+        else
+            $themeoption = 3;
 
         $themeName = $theme->name;
         if($themeName == 'theme1') 
@@ -165,7 +228,7 @@ class PostsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Request $request, $id)
     {
         $post = Post::find($id);
 
@@ -175,8 +238,30 @@ class PostsController extends Controller
                 return redirect('/blog')->with('error', 'Unauthorized Page');
         }
 
+       
         $theme = Theme::where('is_active', true)->get()->first();
-        $navItems = NavItem::orderBy('position', 'asc')->get();
+        $posts = Post::orderBy('created_at', 'desc')->paginate(10);
+
+        $locale = substr($request->server('HTTP_ACCEPT_LANGUAGE'), 0, 2);
+        //return $locale;
+
+        $theme = Theme::where('is_active', true)->get()->first();
+        
+        if($locale == 'de'){
+            
+            $navItems = Navitem::orderBy('position', 'asc')->where('language', 'de')->get();
+        }
+        else{
+            
+            $navItems = Navitem::orderBy('position', 'asc')->where('language', 'en')->get();
+        }
+       
+        $themeoption = 0;
+        if($locale == 'en'){
+            $themeoption = 1;
+        }
+        else
+            $themeoption = 3;
 
         $themeName = $theme->name;
         if($themeName == 'theme1') 

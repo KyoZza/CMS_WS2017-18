@@ -20,6 +20,8 @@ class CreatePagesTable extends Migration
             $table->boolean('is_published');            
             $table->integer('user_id');            
             $table->timestamps();
+            $table->string('url');
+            $table->string('language');
         });
     }
 
