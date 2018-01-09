@@ -14,7 +14,7 @@ class AddUniqueKeyToPagesTable extends Migration
      public function up()
      {
          Schema::table('pages', function($table) {
-             $table->string('url')->unique();
+             $table->string('url');
          });
      }
  

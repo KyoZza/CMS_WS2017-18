@@ -222,9 +222,18 @@ class AdminController extends Controller
         return redirect('/admin/customize/general')->with('success', 'General options updated');
     }
 
-    public function customizeNavbar() {
-        $theme = Theme::where('is_active', true)->get()->first();        
-        $navItems = Navitem::orderBy('position', 'asc')->get();  
+    public function customizeNavbar(Request $request) {
+
+        $locale = substr($request->server('HTTP_ACCEPT_LANGUAGE'), 0, 2);
+
+        $theme = Theme::where('is_active', true)->get()->first();
+        
+        if($locale == 'de'){
+            $navItems = Navitem::orderBy('position', 'asc')->where('language', 'de')->get();
+        }
+        else{
+            $navItems = Navitem::orderBy('position', 'asc')->where('language', 'en')->get();
+        }
         
         $pages = Page::all(); 
         $pageOptions = array();
@@ -340,7 +349,8 @@ class AdminController extends Controller
         ]);
         
         $theme = Theme::where('is_active', true)->get()->first();  
-        $themeOptions = $theme->themeHeaderOptions[1];       
+        $themeOptions1 = $theme->themeHeaderOptions[1];       
+        $themeOptions2 = $theme->themeHeaderOptions[3];       
 /*         
         // Handle File Upload
         if ($request->hasFile('header_img')) {
@@ -365,10 +375,15 @@ class AdminController extends Controller
             $themeOptions->background_image = $fileNameToStore;
         }
   */
-        $themeOptions->title = $request->input('title');
-        $themeOptions->subtitle = $request->input('subtitle');
-        $themeOptions->background_image = $request->input('header_img');
-        $themeOptions->save();
+        $themeOptions1->title = $request->input('title');
+        $themeOptions1->subtitle = $request->input('subtitle');
+        $themeOptions1->background_image = $request->input('header_img');
+        $themeOptions1->save();
+
+        $themeOptions2->title = $request->input('title');
+        $themeOptions2->subtitle = $request->input('subtitle');
+        $themeOptions2->background_image = $request->input('header_img');
+        $themeOptions2->save();
 
         // create new Activity for the newly updated Header        
         $activity = new Activity;
