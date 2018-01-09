@@ -3,8 +3,14 @@
         <div class="row">
             <div class="col-md-10">
                 <h1>
-                    <i class="fa fa-{{$icon}}" aria-hidden="true"></i>
-                     {{$title}}
+                    @if(auth::user())
+                        <i class="fa fa-{{$icon}}" aria-hidden="true"></i>
+                        {{$title}}
+                    @else
+                        <i class="fa fa-user" aria-hidden="true"></i>
+                        Sign In
+                    @endif
+                    
                 </h1>
             </div>
             @if(auth::user())

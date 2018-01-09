@@ -14,7 +14,7 @@
     <link href="<?php echo e(asset('css/app.css')); ?>" rel="stylesheet">
     <link href="/vendor/itsjavi/bootstrap-colorpicker/dist/css/bootstrap-colorpicker.css" rel="stylesheet">
     <?php echo $__env->make('inc.style-admin', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
-    <?php if(!$customizeIsCollapsed): ?>
+    <?php if($activeListGroupItem == 'header'): ?>
         <?php echo $__env->make('inc.'.$theme.'.style', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?> 
     <?php endif; ?>
 </head>
@@ -89,6 +89,9 @@
         }
 
         function onThemeColorChange(event, colorId) {
+            $(".thumbnail.active").removeClass('active');
+            $(event.target.parentNode).addClass('active');
+            
             document.getElementById('theme_color').value = colorId;
         }
 

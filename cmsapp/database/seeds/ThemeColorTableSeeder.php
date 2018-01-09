@@ -19,7 +19,6 @@ class ThemeColorTableSeeder extends Seeder
         $color->standard = '#e53935'; 
         $color->light = '#ff6f60'; 
         $color->dark = '#ab000d';
-        $color->is_active = true;
         $color->save();
 
         $color = new ThemeColor();

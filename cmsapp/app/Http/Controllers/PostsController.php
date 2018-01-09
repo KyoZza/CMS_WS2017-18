@@ -8,6 +8,9 @@ use App\Post;
 use App\Theme;
 use App\NavItem;
 use App\Activity;
+use App\GeneralOptions;
+use App\Fonts;
+use App\ThemeColor;
 
 class PostsController extends Controller
 {
@@ -43,8 +46,7 @@ class PostsController extends Controller
 
         $theme = Theme::where('is_active', true)->get()->first();
         
-        if($locale == 'de'){
-            
+        if($locale == 'de'){        
             $navItems = Navitem::orderBy('position', 'asc')->where('language', 'de')->get();
         }
         else{
@@ -58,6 +60,10 @@ class PostsController extends Controller
         }
         else
             $themeoption = 3;
+
+        $themeOptions = GeneralOptions::where('theme', 'custom')->get()->first();
+        $font = Fonts::find($themeOptions->fonts_id);
+        $themeColor = ThemeColor::find($themeOptions->theme_colors_id);
         
 
         $themeName = $theme->name;
@@ -68,7 +74,10 @@ class PostsController extends Controller
             'posts' => $posts,
             'navItems' => $navItems,
             'theme' => $themeName,
-            'header' => $theme->themeHeaderOptions[$themeoption]
+            'header' => $theme->themeHeaderOptions[$themeoption],   
+            'themeOptions' => $themeOptions,   
+            'font' => $font,
+            'themeColor' => $themeColor
         ];
 
         return view('posts.index')->with($data);
@@ -89,8 +98,7 @@ class PostsController extends Controller
 
         $theme = Theme::where('is_active', true)->get()->first();
         
-        if($locale == 'de'){
-            
+        if($locale == 'de'){           
             $navItems = Navitem::orderBy('position', 'asc')->where('language', 'de')->get();
         }
         else{
@@ -104,6 +112,10 @@ class PostsController extends Controller
         }
         else
             $themeoption = 3;
+  
+        $themeOptions = GeneralOptions::where('theme', 'custom')->get()->first();
+        $font = Fonts::find($themeOptions->fonts_id);
+        $themeColor = ThemeColor::find($themeOptions->theme_colors_id);
 
         $themeName = $theme->name;
         if($themeName == 'theme1') 
@@ -112,7 +124,10 @@ class PostsController extends Controller
         $data = [
             'navItems' => $navItems,
             'theme' => $themeName,
-            'header' => $theme->themeHeaderOptions[$themeoption]
+            'header' => $theme->themeHeaderOptions[$themeoption],   
+            'themeOptions' => $themeOptions,   
+            'font' => $font,
+            'themeColor' => $themeColor
         ];
         
         return view('posts.create')->with($data);
@@ -192,8 +207,7 @@ class PostsController extends Controller
 
         $theme = Theme::where('is_active', true)->get()->first();
         
-        if($locale == 'de'){
-            
+        if($locale == 'de'){        
             $navItems = Navitem::orderBy('position', 'asc')->where('language', 'de')->get();
         }
         else{
@@ -208,6 +222,10 @@ class PostsController extends Controller
         else
             $themeoption = 3;
 
+        $themeOptions = GeneralOptions::where('theme', 'custom')->get()->first();
+        $font = Fonts::find($themeOptions->fonts_id);
+        $themeColor = ThemeColor::find($themeOptions->theme_colors_id);
+
         $themeName = $theme->name;
         if($themeName == 'theme1') 
             $themeName = $themeName.'-main';
@@ -216,7 +234,10 @@ class PostsController extends Controller
             'post' => $post,
             'navItems' => $navItems,
             'theme' => $themeName,
-            'header' => $theme->themeHeaderOptions[1]
+            'header' => $theme->themeHeaderOptions[$themeOptions],   
+            'themeOptions' => $themeOptions,   
+            'font' => $font,
+            'themeColor' => $themeColor
         ];
         
         return view('posts/show')->with($data);
@@ -263,6 +284,11 @@ class PostsController extends Controller
         else
             $themeoption = 3;
 
+        $navItems = NavItem::orderBy('position', 'asc')->get();
+        $themeOptions = GeneralOptions::where('theme', 'custom')->get()->first();
+        $font = Fonts::find($themeOptions->fonts_id);
+        $themeColor = ThemeColor::find($themeOptions->theme_colors_id);
+
         $themeName = $theme->name;
         if($themeName == 'theme1') 
             $themeName = $themeName.'-main';
@@ -271,7 +297,10 @@ class PostsController extends Controller
             'post' => $post,
             'navItems' => $navItems,
             'theme' => $themeName,
-            'header' => $theme->themeHeaderOptions[1]
+            'header' => $theme->themeHeaderOptions[$themeoption],   
+            'themeOptions' => $themeOptions,   
+            'font' => $font,
+            'themeColor' => $themeColor
         ];
 
         return view('posts/edit')->with($data);

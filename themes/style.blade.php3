@@ -1,52 +1,14 @@
 <style>
-    /*** dynamic styles loaded from database ***/
-
-    /*http://fonts.googleapis.com/css?family=Roboto*/
-    @import  url(<?php echo e($font->url); ?>);@charset  "UTF-8";
-
-    
     .theme1 body {
-        font-family: <?php echo $font->css; ?>;        
         margin-bottom: 0;
-    }
-
-    .theme1 .body-fontSize {
-        font-size: <?php echo e($themeOptions->font_size); ?>px;
-    }
-
-    .theme1 .themeColor-standard {
-        background-color: <?php echo e($themeColor->standard); ?> !important;
-        color: <?php echo e($themeColor->dark_text); ?> !important;
-    }
-
-    .theme1 .themeColor-light {
-        background-color: <?php echo e($themeColor->light); ?> !important;
-        color: <?php echo e($themeColor->dark_text); ?> !important;
-    }
-
-    .theme1 .themeColor-dark {
-        background-color: <?php echo e($themeColor->dark); ?> !important;
-        color: <?php echo e($themeColor->light_text); ?> !important;
-    }
-
-    .theme1 a {
-        color: <?php echo e($themeColor->standard); ?>;
-    }
-
-    .theme1 a:hover {
-        color: <?php echo e($themeColor->dark); ?> !important;
-    }
-
-    .theme1 #footer-upper {
-        border-bottom: 100px solid <?php echo e($themeColor->dark); ?>; 
-        border-left: 97vw solid transparent;
     }
 
     /* Styles for fullpage header */
     .theme1 #showcase {
         /* 220067 235721 253905 318238 589840 */
-        background-image: url('/storage/header_images/<?php echo e($header->background_image); ?>');
-        height: 100vh;  /* vh = viewport height */ 
+        background-image: url('/storage/header_images/{{$header->background_image}}');
+        background-attachment: fixed;
+        height: 70vh;  /* vh = viewport height */ 
         background-size: cover;
         background-position: center;
         display: flex;
@@ -54,24 +16,29 @@
         justify-content: flex-end;
     }
 
-
-    /*** !!!Static styles!!! ***/
-
-    /* Styles for fullpage header */ 
     .theme1 #showcase .well {
-        background-color: #fffefe33;
+        background-color: rgba(0,0,0,0);
         border: none !important;
         border-radius: 0 !important;
         -webkit-box-shadow: none !important;
         box-shadow: none !important;
-        color: #ffffffe6;
+        color: white;
         text-shadow: 0 0 3px black;
-        margin-bottom: 46px;
+        margin-bottom: 250px;
+        text-align: center;
     }
     
     .theme1 .showcase-slim {
         height: fit-content !important;
         height: -moz-fit-content !important;
+    }
+    .theme1 #nav{
+        position:fixed;
+        top:0px;
+        width: 100%;
+        z-index:10;
+        background-color: #778899;
+        box-shadow: 0 4px 4px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
     }
 
     .theme1 #nav.affix {
@@ -82,46 +49,48 @@
     }
 
     .theme1 #nav.affix-top .navbar-default {
-        border-color: #050100b3;
+        
     }
 
     .theme1 #nav.affix-top .navbar-default,
     .theme1 #nav.affix-top .dropdown-menu {
-        background-color: #000000b3;
+       
     }
 
     .theme1 #nav.affix-top .navbar-default .navbar-nav > .open > a, 
     .theme1 #nav.affix-top .navbar-default .navbar-nav > .open > a:hover, 
     .theme1 #nav.affix-top .navbar-default .navbar-nav > .open > a:focus {
-        background-color: #0005;
+        
     }
 
     .theme1 #nav.affix-top .navbar-default .navbar-nav > li > a, 
     .theme1 #nav.affix-top .navbar-default .navbar-brand,
     .theme1 #nav.affix-top .dropdown-menu, 
     .theme1 #nav.affix-top .dropdown-menu > li > a {
-        color: #fffc;
-        text-shadow: 0 0 5px black;
+        
+     
     }
     .theme1 #nav.affix-top .navbar-default .navbar-nav > li > a:hover,
     .theme1 #nav.affix-top .navbar-default .navbar-brand:hover, 
     .theme1 #nav.affix-top .dropdown-menu > li > a:hover { 
-        color: #fff;
-        text-shadow: 0 0 6px black;
+      
     }
     
     .theme1 #nav.affix-top .dropdown-menu > li > a:hover { 
-        background-color: #fff0;
+        
     }
 
     /* Styles for content area */
     .theme1 .main-content {
         margin-top: 60px;
         margin-bottom: 60px;
+        text-align:justify;
     }
 
     .theme1 .main-content h1 {
         margin-bottom: 26px;
+        text-align:center;
+        font-size: 40px;
     }
 
     .theme1 .main-content a:hover {
@@ -133,6 +102,11 @@
         background-color: #333;
         color: #fff;
         width: 100%;
+    }
+
+    .theme1 #footer-upper {
+        border-bottom: 100px solid #333; 
+        border-left: 97vw solid transparent;
     }
 
     .theme1 .footer-icon-a {

@@ -16,7 +16,8 @@
                     <div class="row">
                         @foreach($themeColors as $themeColor)
                             <div class="col-xs-2 col-md-1">
-                                <a class="thumbnail" onclick="onThemeColorChange(event, {{$themeColor->id}});">
+                                <a  class="thumbnail {{$themeOptions->theme_colors_id == $themeColor->id ? 'active' : ''}}" 
+                                    onclick="onThemeColorChange(event, {{$themeColor->id}});">
                                     <img    src="/storage/general_images/transparent.png" alt="{{$themeColor->standard}}"
                                             class="general-color-thumbnail" style="background-color: {{$themeColor->standard}}">
                                 </a>
@@ -24,7 +25,7 @@
                         @endforeach
                     </div>
 
-                    {{Form::text('theme_color', '', ['class' => 'form-control', 'id' => 'theme_color', 'style' => 'display: none' ])}}                    
+                    {{Form::text('theme_color', $themeColor->id, ['class' => 'form-control', 'id' => 'theme_color', 'style' => 'display: none' ])}}                    
                 </div>
 
                 <!-- Gogo Nils!
@@ -33,7 +34,7 @@
                     {{Form::label('font_family', 'Font')}}
                     <select class="form-control" name="font_family">
                     @foreach($fonts as $font)
-                        <option value="{{$font->css}}">{{$font->name}}</option>   
+                        <option value="{{$font->id}}" {{$themeOptions->fonts_id == $font->id ? 'selected' : ''}}>{{$font->name}}</option>   
                     @endforeach
                     </select>
                 </div>
@@ -41,7 +42,7 @@
                 <!-- Font Size eventuell auch als select feld -->
                 <div class="form-group">
                     {{Form::label('font_size', 'Font Size')}}
-                    {{Form::text('title', ''/*später wert aus db*/, ['class' => 'form-control', 'placeholder' => '12', 'onkeyup'=> 'onHeaderTitleChange(event);'])}}
+                    {{Form::text('font_size', $themeOptions->font_size, ['class' => 'form-control', 'placeholder' => '12', 'onkeyup'=> 'onHeaderTitleChange(event);'])}}
                 </div>
 
                 <!-- Eventuell noch mehr allgemeine Optionen 

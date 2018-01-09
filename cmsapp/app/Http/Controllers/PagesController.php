@@ -10,6 +10,9 @@ use App\Page;
 use App\NavItem;
 use App\Theme;
 use App\ThemeHeaderOptions;
+use App\GeneralOptions;
+use App\Fonts;
+use App\ThemeColor;
 use App;
 use Session;
 use Config;
@@ -46,9 +49,7 @@ class PagesController extends Controller
 
 
     public function home(Request $request) {
-
         $locale = substr($request->server('HTTP_ACCEPT_LANGUAGE'), 0, 2);
-        //return $locale;
 
         $theme = Theme::where('is_active', true)->get()->first();
         
@@ -68,10 +69,19 @@ class PagesController extends Controller
         else
             $themeoption =3;
 
+        $themeOptions = GeneralOptions::where('theme', 'custom')->get()->first();
+        $font = Fonts::find($themeOptions->fonts_id);
+        $themeColor = ThemeColor::find($themeOptions->theme_colors_id);
+        
+        
+
         $data = [
             'page' => $page,
             'navItems' => $navItems,
-            'header' => $theme->themeHeaderOptions[$themeoption]
+            'header' => $theme->themeHeaderOptions[$themeoption],
+            'themeOptions' => $themeOptions,   
+            'font' => $font,
+            'themeColor' => $themeColor
         ];
 
 
@@ -121,11 +131,19 @@ class PagesController extends Controller
                 }
                 else
                     $themeoption =3;
+                    
+                $themeOptions = GeneralOptions::where('theme', 'custom')->get()->first();
+                $font = Fonts::find($themeOptions->fonts_id);
+                $themeColor = ThemeColor::find($themeOptions->theme_colors_id);
         
+
                 $data = [
                     'page' => $page,
                     'navItems' => $navItems,
-                    'header' => $theme->themeHeaderOptions[$themeoption]
+                    'header' => $theme->themeHeaderOptions[$themeoption],
+                    'themeOptions' => $themeOptions,   
+                    'font' => $font,
+                    'themeColor' => $themeColor
                 ];
         ;
 

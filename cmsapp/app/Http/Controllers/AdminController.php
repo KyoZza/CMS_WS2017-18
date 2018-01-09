@@ -12,6 +12,7 @@ use App\NavItem;
 use App\Theme;
 use App\ThemeHeaderOptions;
 use App\HeaderImage;
+use App\GeneralOptions;
 use App\ThemeColor;
 use App\Fonts;
 
@@ -177,6 +178,7 @@ class AdminController extends Controller
         $theme = Theme::where('is_active', true)->get()->first();  
         $themeColors = ThemeColor::all();   
         $fonts = Fonts::all();
+        $themeOptions = GeneralOptions::where('theme', 'custom')->get()->first();
         // Data to pass into the template
         $data = array(
             'title' => 'General Customization',
@@ -190,7 +192,8 @@ class AdminController extends Controller
             'theme' => $theme->name,
             'header' => $theme->themeHeaderOptions[1],
             'themeColors' => $themeColors,
-            'fonts' => $fonts
+            'fonts' => $fonts,
+            'themeOptions' => $themeOptions
         );
 
         return view('admin.customize-general')->with($data);
@@ -198,14 +201,16 @@ class AdminController extends Controller
 
     public function customizeGeneralUpdate(Request $request) {
         $this->validate($request, [
-            'theme-color' => 'required',
+            'theme_color' => 'required',
+            'font_family' => 'required',
+            'font_size' => 'required',
         ]);
         
-        $themeColorId = $request->input('theme-color');
-        $currentlyActiveThemeColor = ThemeColor::where('is_active', true)->get();
-        $newActiveThemeColor = ThemeColor::find($themeColorId);
-        
-        //
+        $themeOptions = GeneralOptions::where('theme', 'custom')->get()->first();
+        $themeOptions->theme_colors_id = $request->input('theme_color');
+        $themeOptions->fonts_id = $request->input('font_family');
+        $themeOptions->font_size = $request->input('font_size');
+        $themeOptions->save();
        
         $activity = new Activity;
         $activity->description = 'General options updated';
@@ -214,7 +219,7 @@ class AdminController extends Controller
         $activity->url_address = '/admin/customize/general';
         $activity->save();
 
-        return redirect('/admin/customize/navbar')->with('success', 'General options updated');
+        return redirect('/admin/customize/general')->with('success', 'General options updated');
     }
 
     public function customizeNavbar() {
@@ -300,6 +305,9 @@ class AdminController extends Controller
         $theme = Theme::where('is_active', true)->get()->first();        
         $navItems = Navitem::orderBy('position', 'asc')->get();   
         $headerImages = HeaderImage::all();     
+        $themeOptions = GeneralOptions::where('theme', 'custom')->get()->first();
+        $font = Fonts::find($themeOptions->fonts_id);
+        $themeColor = ThemeColor::find($themeOptions->theme_colors_id);
 
         // Data to pass into the template
         $data = array(
@@ -315,7 +323,10 @@ class AdminController extends Controller
             'navItems' => $navItems,
             'theme' => $theme->name,
             'header' => $theme->themeHeaderOptions[1],
-            'headerImages' => $headerImages
+            'headerImages' => $headerImages,
+            'themeOptions' => $themeOptions,   
+            'font' => $font,
+            'themeColor' => $themeColor
         );
 
         return view('admin.customize-header')->with($data);
