@@ -14,7 +14,7 @@
                             <hr>
                             <small>
                                 <?php if(strlen($post->body) > 200): ?>
-                                    <?php echo substr($post->body, 0, 200).'... <a href="/blog/'.$post->id.'">Read more</a>'; ?>
+                                    <?php echo trim(substr($post->body, 0, 200)).'... <a href="/blog/'.$post->id.'">Read more</a>'; ?>
 
                                 <?php else: ?>
                                     <?php echo $post->body; ?>

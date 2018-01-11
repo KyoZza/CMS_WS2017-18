@@ -16,7 +16,7 @@
                             <hr>
                             <small>
                                 @if(strlen($post->body) > 200)
-                                    {!! substr($post->body, 0, 200).'... <a href="/blog/'.$post->id.'">Read more</a>' !!}
+                                    {!! trim(substr($post->body, 0, 200)).'... <a href="/blog/'.$post->id.'">Read more</a>' !!}
                                 @else
                                     {!!$post->body!!}
                                 @endif

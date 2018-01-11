@@ -16,7 +16,7 @@ class CreateThemeHeaderOptionsTable extends Migration
         Schema::create('theme_header_options', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('theme_id');                        
-            $table->string('theme')->unique();
+            $table->string('theme');
             $table->string('background_image');
             $table->string('title');
             $table->string('subtitle');

@@ -4,13 +4,7 @@
         <div class="panel-heading main-color-bg">Users</div>
 
         <div class="panel-body">
-            <?php if(session('status')): ?>
-                <div class="alert alert-success">
-                    <?php echo e(session('status')); ?>
-
-                </div>
-            <?php endif; ?>
-
+            
             <?php if(Auth::user()->hasRole('Super Saiyajin')): ?>
                 <a href="/admin/users/create" class="btn btn-default">Create User</a>
                 <br><br>

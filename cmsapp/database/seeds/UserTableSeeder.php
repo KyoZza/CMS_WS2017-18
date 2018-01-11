@@ -19,7 +19,7 @@ class UserTableSeeder extends Seeder
     
         $user1 = new User();
         $user1->name = 'Yamcha';
-        $user1->email = 'yamcha@cms.com’';
+        $user1->email = 'yamcha@cms.com';
         $user1->password = bcrypt('secret');
         $user1->theme_color = '#552211';
         $user1->save();

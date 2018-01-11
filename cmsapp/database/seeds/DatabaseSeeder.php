@@ -10,7 +10,7 @@ class DatabaseSeeder extends Seeder
      * @return void
      */
     public function run()
-    {
+    {/*
         // Role comes before User seeder here.
         $this->call(RoleTableSeeder::class);
         // User seeder will use the roles above created.
@@ -24,7 +24,8 @@ class DatabaseSeeder extends Seeder
         $this->call(HeaderImageTableSeeder::class);     
         $this->call(ThemeColorTableSeeder::class);
         $this->call(FontsTableSeeder::class);
-        $this->call(GeneralOptionsSeeder::class);
+        $this->call(GeneralOptionsSeeder::class);*/
+        $this->call(HeaderImageTableSeeder::class); 
         
 
         /* Uncomment the seeds you need!! */

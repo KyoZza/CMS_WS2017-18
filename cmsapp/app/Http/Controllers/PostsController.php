@@ -200,18 +200,14 @@ class PostsController extends Controller
         $post = Post::find($id);
        
         $theme = Theme::where('is_active', true)->get()->first();
-        $posts = Post::orderBy('created_at', 'desc')->paginate(10);
 
         $locale = substr($request->server('HTTP_ACCEPT_LANGUAGE'), 0, 2);
         //return $locale;
-
-        $theme = Theme::where('is_active', true)->get()->first();
         
         if($locale == 'de'){        
             $navItems = Navitem::orderBy('position', 'asc')->where('language', 'de')->get();
         }
-        else{
-            
+        else{         
             $navItems = Navitem::orderBy('position', 'asc')->where('language', 'en')->get();
         }
        
@@ -234,7 +230,7 @@ class PostsController extends Controller
             'post' => $post,
             'navItems' => $navItems,
             'theme' => $themeName,
-            'header' => $theme->themeHeaderOptions[$themeOptions],   
+            'header' => $theme->themeHeaderOptions[$themeoption],   
             'themeOptions' => $themeOptions,   
             'font' => $font,
             'themeColor' => $themeColor

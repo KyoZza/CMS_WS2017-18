@@ -213,6 +213,7 @@ class UserController extends Controller
         $user->email = $request->input('email');
         if($request->input('password') !== null)
             $user->password = bcrypt($request->input('password'));
+        $user->theme_color = '#f008';
 
         $user->save();
         //$user->roles()->attach(Role::where('id', $request->input('role'))->first());        

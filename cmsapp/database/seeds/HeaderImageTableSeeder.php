@@ -33,7 +33,19 @@ class HeaderImageTableSeeder extends Seeder
         $image5->save();
 
         $image6 = new HeaderImage();
-        $image6->name = 'pexels-photo.jpg';
+        $image6->name = 'cms.jpg';
+        $image6->save();
+
+        $image6 = new HeaderImage();
+        $image6->name = 'cms2.jpg';
+        $image6->save();
+
+        $image6 = new HeaderImage();
+        $image6->name = 'cms3.jpg';
+        $image6->save();
+
+        $image6 = new HeaderImage();
+        $image6->name = 'cms4.jpg';
         $image6->save();
     }
 }

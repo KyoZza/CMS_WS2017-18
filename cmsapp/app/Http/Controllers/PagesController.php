@@ -63,7 +63,7 @@ class PagesController extends Controller
         }
        
         $themeoption = 0;
-        if($locale == 'en'){
+        if($locale === 'en'){
             $themeoption = 1;
         }
         else
@@ -126,7 +126,7 @@ class PagesController extends Controller
                 
                
                 $themeoption = 0;
-                if($locale == 'en'){
+                if($locale === 'en'){
                     $themeoption = 1;
                 }
                 else
@@ -136,6 +136,7 @@ class PagesController extends Controller
                 $font = Fonts::find($themeOptions->fonts_id);
                 $themeColor = ThemeColor::find($themeOptions->theme_colors_id);
         
+                //return $themeoption;
 
                 $data = [
                     'page' => $page,

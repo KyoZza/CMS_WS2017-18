@@ -14,7 +14,7 @@ class AddThemeColorToUser extends Migration
     public function up()
     {
         Schema::table('users', function($table) {
-            $table->string('theme_color');
+            $table->string('theme_color')->nullable();
         });
     }
 
