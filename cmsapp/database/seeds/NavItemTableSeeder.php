@@ -35,7 +35,7 @@ class NavItemTableSeeder extends Seeder
 //de
 
         $navItem4 = new NavItem;
-        $navItem4->title = 'Märchen';
+        $navItem4->title = 'Startseite';
         $navItem4->position = 0;
         $navItem4->link = '/';
         $navItem4->language = 'de';
