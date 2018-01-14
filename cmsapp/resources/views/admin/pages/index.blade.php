@@ -1,17 +1,10 @@
 @extends('layouts.backend')
 
 @section('content')
-    @include('inc.general.messages')
     <div class="panel panel-default">
         <div class="panel-heading main-color-bg">Pages</div>
 
         <div class="panel-body">
-            @if (session('status'))
-                <div class="alert alert-success">
-                    {{ session('status') }}
-                </div>
-            @endif
-
             @if(Auth::user()->hasAnyRole(['Website Manager', 'Super Saiyajin']))
                 <a href="/admin/pages/create" class="btn btn-default">Create Page</a>
                 <br><br>

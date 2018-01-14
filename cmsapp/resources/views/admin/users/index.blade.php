@@ -1,7 +1,6 @@
 @extends('layouts.backend')
 
 @section('content')
-    @include('inc.general.messages')
     <div class="panel panel-default">
         <div class="panel-heading main-color-bg">Users</div>
 
@@ -23,6 +22,8 @@
                     @foreach($users as $user)
                         <tr>
                             <td>
+                                <img src="{{$user->avatar === null ? '/storage/general_images/transparent.png' : '/storage/user_images/'.$user->avatar}}" 
+                                    width="26px">
                                 <a href="/admin/users/{{$user->id}}">{{$user->name}}</a>
                             </td>
                             <td>

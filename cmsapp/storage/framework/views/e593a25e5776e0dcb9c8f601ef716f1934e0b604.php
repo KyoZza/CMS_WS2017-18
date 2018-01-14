@@ -33,11 +33,12 @@
                     <li>
                         <a href="#" id="page-color">Page Color</a>
               
-                        <?php echo Form::open(['action' => 'AdminController@setPageColor', 'method' => 'POST']); ?>
+                        <?php echo Form::open(['action' => ['AdminController@setPageColor', str_replace('/', '.', Request::path())], 'method' => 'POST']); ?>
 
                             <div class="form-group" style="display: none">
                                 <?php echo e(Form::text('color', '', ['id' => 'nav-color-picker-value'])); ?>
 
+                                <?php echo e(Form::hidden('_method', 'PUT')); ?> <!-- To spoof a PUT request instead of POST -->
                                 <?php echo e(Form::submit('Submit', ['id' => 'nav-color-picker-submit'])); ?>
 
                             </div>
@@ -47,11 +48,18 @@
 
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle main-color-bg" data-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true">
-                            Welcome, <?php echo e(Auth::user()->name); ?> <span class="caret"></span>
+                            <img src="<?php echo e(Auth::user()->avatar === null ? '/storage/general_images/transparent.png' : '/storage/user_images/'.Auth::user()->avatar); ?>" 
+                                width="26px" style="border: 1px solid #ddd; margin-right: 4px">
+                            Yo, <?php echo e(Auth::user()->name); ?> <span class="caret"></span>
+                            
                         </a>
 
                         <ul class="dropdown-menu">
                             <li>
+                                <a href="users/<?php echo e(Auth::user()->id); ?>">
+                                    Profile
+                                </a>
+
                                 <a href="<?php echo e(route('logout')); ?>"
                                     onclick="event.preventDefault();
                                                 document.getElementById('logout-form').submit();">
@@ -61,7 +69,7 @@
                                 <form id="logout-form" action="<?php echo e(route('logout')); ?>" method="POST" style="display: none;">
                                     <?php echo e(csrf_field()); ?>
 
-                                </form>
+                                </form>          
                             </li>
                         </ul>
                     </li>

@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage; //for file storage
 use App\User;
 use App\Activity;
 use App\Role;
+use App\Message;
 use Auth;
 
 
@@ -56,7 +58,7 @@ class UserController extends Controller
             ],
             'customizeIsCollapsed' => true,
             'activeListGroupItem' => 'users',
-
+            'numMessages' => Message::count(),
             'users' => $users
         );
 
@@ -92,7 +94,7 @@ class UserController extends Controller
             ],
             'customizeIsCollapsed' => true,
             'activeListGroupItem' => 'users',
-
+            'numMessages' => Message::count(),
             'roles' => $roleOptions
         );
 
@@ -152,7 +154,7 @@ class UserController extends Controller
             ],
             'customizeIsCollapsed' => true,
             'activeListGroupItem' => 'users',
-
+            'numMessages' => Message::count(),
             'user' => $user
         );
 
@@ -185,7 +187,7 @@ class UserController extends Controller
             ],
             'customizeIsCollapsed' => true,
             'activeListGroupItem' => 'users',
-
+            'numMessages' => Message::count(),
             'user' => $user
         );
 
@@ -246,6 +248,8 @@ class UserController extends Controller
 
             Auth::logout();   
 
+            Storage::delete('public/user_images/'.$user->avatar);
+            $user->roles()->detach();            
             $user->delete();
             
             return redirect('/');      
@@ -259,10 +263,61 @@ class UserController extends Controller
             $activity->url_address = '#';
 
             $user->roles()->detach();
+            Storage::delete('public/user_images/'.$user->avatar);            
             $user->delete();
             $activity->save();
-        
+               
             return redirect('/admin/users')->with('success', 'User deleted');           
         }         
+    }
+
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function selectUserAvater(Request $request, $id)
+    {
+        // $this->validate($request, [
+        //     'name' => 'required|string|max:191',
+        //     'email' => 'required|string|email|max:255|unique:users',
+        //     'password' => 'string|min:6|confirmed|nullable'
+        //     //'role' => 'required'
+        // ]);
+
+        $user = User::find($id);
+        
+        // Get file name with extension
+        $fileNameWithExt = $request->file('user-avatar-file')->getClientOriginalName();
+        // Get just file name
+        $filename = pathinfo($fileNameWithExt, PATHINFO_FILENAME);
+
+        // Get just extension
+        $extension = $request->file('user-avatar-file')->getClientOriginalExtension();
+
+        // Create file name to store 
+        // Add timestamp to avoid clash of identical file names
+        $fileNameToStore = $filename.'_'.time().'.'.$extension;
+
+        // Upload Image
+        $path = $request->file('user-avatar-file')->storeAs('public/user_images', $fileNameToStore);
+        
+        Storage::delete('public/user_images/'.$user->avatar);
+        $user->avatar = $fileNameToStore;
+          
+        $user->save();
+
+        // create new Activity for the newly stored Post        
+        $activity = new Activity;
+        $activity->description = 'User profile updated';
+        $activity->user_id = auth()->user()->id;
+        $activity->url_title = $user->name;
+        $activity->url_address = '/admin/users/'.$user->id;
+        $activity->save();
+
+        return redirect('/admin/users/'.$user->id)->with('success', 'User avatar updated');
     }
 }

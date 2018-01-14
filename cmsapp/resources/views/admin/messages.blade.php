@@ -13,11 +13,21 @@
 
            @if(count($messages) > 0)
                 @foreach($messages as $message)
-                    <ul class = "list-group">
-                        <li class = "list-group-item">Name: {{$message->name}}</li>
-                        <li class = "list-group-item">Email: {{$message->email}}</li>
-                        <li class = "list-group-item">Message: {{$message->message}}</li>
-                    </ul>
+                    <div class = "list-group">                   
+                        <a href="messages/{{$message->id}}" class = "list-group-item">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <strong>From: </strong>{{$message->name}}
+                                </div>
+                                <div class="col-md-4">
+                                    <strong>Subject: </strong>{{$message->name}}                                    
+                                </div>
+                                <div class="col-md-4">
+                                    <strong>Date: </strong>{{$message->created_at}}                                    
+                                </div>
+                            </div> 
+                        </a>
+                    </div>
                 @endforeach
             @else
                 <p>You have no Messages yet.</p>

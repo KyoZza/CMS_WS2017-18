@@ -1,7 +1,8 @@
 @extends('layouts.'.$theme)
 
 @section('content')
-    @include('inc.posts.create')
+    <h1>{{$language === 'de' ? 'Post erstellen' : 'Create Post'}}</h1>    
+    @include('inc.posts.create-onpage')
 @endsection
 
 

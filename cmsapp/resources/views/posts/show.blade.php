@@ -5,10 +5,10 @@
         <div class="well">
             <div class="row">
                 <div class="col-md-9 col-sm-9"><h1>{{$post->title}}</h1></div>
-                <div class="col-md-3 col-sm-3"><a href="/blog" class="btn btn-default pull-right">Go Back</a></div>
+                <div class="col-md-3 col-sm-3"><a href="/blog" class="btn btn-default pull-right">{{$language === 'de' ? 'Zurück' : 'Go Back'}}</a></div>
             </div>
             
-            <p>Written on {{$post->created_at}} by {{$post->user->name}}</p>
+            <p>{{$language === 'de' ? 'Verfasst am' : 'Written on'}} {{$post->created_at}} {{$language === 'de' ? 'von' : 'by'}} {{$post->user->name}}</p>
             <hr>
 
             @if($post->cover_img != 'noimage.jpg')
@@ -23,10 +23,10 @@
 
             @if(!Auth::guest())
                 @if(Auth::user()->id == $post->user_id || Auth::user()->hasRole('Super Saiyajin'))
-                    <a href="/blog/{{$post->id}}/edit" class="btn btn-default">Edit</a>
+                    <a href="/blog/{{$post->id}}/edit" class="btn btn-default">{{$language === 'de' ? 'Bearbeiten' : 'Edit'}}</a>
                     {!! Form::open(['action' => ['PostsController@destroy', $post->id], 'method' => 'POST', 'class' => 'pull-right']) !!}
                         {{Form::hidden('_method', 'DELETE')}} <!-- To spoof a DELETE request instead of POST -->
-                        {{Form::submit('Delete', ['class' => 'btn btn-danger'])}}
+                        {{Form::submit($language === 'de' ? 'Löschen' : 'Delete', ['class' => 'btn btn-danger'])}}
                     {!! Form::close() !!} 
                 @endif     
             @endif

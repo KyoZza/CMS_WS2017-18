@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Message;
 use App\NavItem;
 use App\Theme;
-
+use App\Footer;
 use App\GeneralOptions;
 use App\Fonts;
 use App\ThemeColor;
@@ -25,21 +25,21 @@ class MessagesController extends Controller
         if($locale == 'de'){           
             $navItems = Navitem::orderBy('position', 'asc')->where('language', 'de')->get();
         }
-        else{
-            
+        else{         
             $navItems = Navitem::orderBy('position', 'asc')->where('language', 'en')->get();
         }
        
         $themeoption = 0;
-        if($locale == 'en'){
-            $themeoption = 1;
+        if($locale == 'de'){
+            $themeoption = 3;
         }
         else
-            $themeoption = 3;
+            $themeoption = 1;
   
         $themeOptions = GeneralOptions::where('theme', 'custom')->get()->first();
         $font = Fonts::find($themeOptions->fonts_id);
         $themeColor = ThemeColor::find($themeOptions->theme_colors_id);
+        $footer = Footer::where('theme', 'custom')->get()->first();
 
         $themeName = $theme->name;
         
@@ -49,7 +49,9 @@ class MessagesController extends Controller
             'header' => $theme->themeHeaderOptions[$themeoption],   
             'themeOptions' => $themeOptions,   
             'font' => $font,
-            'themeColor' => $themeColor
+            'themeColor' => $themeColor,
+            'footer' => $footer,
+            'language' => $locale 
         ];
         
         
@@ -57,12 +59,18 @@ class MessagesController extends Controller
     }
 
     public function submit(Request $request){
-        $this->validate($request, ['name' => 'required', 'email' => 'required']);
+        $this->validate($request, [
+            'name' => 'required', 
+            'email' => 'required|email',
+            'subject' => 'required',
+            'message' => 'required'
+        ]);
     
         // Create new Message 
         $message = new Message;
         $message->name = $request->input('name');
         $message->email = $request->input('email');
+        $message->subject = $request->input('subject');
         $message->message = $request->input('message');
 
         // Save Message
@@ -71,6 +79,5 @@ class MessagesController extends Controller
         // Redirect
         return redirect('/')->with('status', 'Message Sent');
     }
-
 
 }

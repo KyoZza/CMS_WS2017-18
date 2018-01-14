@@ -15,6 +15,7 @@ use App\HeaderImage;
 use App\GeneralOptions;
 use App\ThemeColor;
 use App\Fonts;
+use App\Footer;
 
 
 class AdminController extends Controller
@@ -87,6 +88,7 @@ class AdminController extends Controller
             'numPosts' => Post::count(),
             'numUsers' => User::count(),
             'numPages' => Page::count(),
+            'numMessages' => Message::count(),
             'activities' => $activities
         );
 
@@ -101,6 +103,10 @@ class AdminController extends Controller
         $user_id = auth()->user()->id;
         $user = User::find($user_id);
 
+        $posts = $user->posts;
+        if(auth()->user()->hasRole('Super Saiyajin'))
+            $posts = Post::all();
+
         // Data to pass into the template
         $data = array(
             'title' => 'Posts',
@@ -110,8 +116,8 @@ class AdminController extends Controller
             ],
             'customizeIsCollapsed' => true,
             'activeListGroupItem' => 'posts',
-
-            'posts' => $user->posts
+            'numMessages' => Message::count(),
+            'posts' => $posts
         );
 
         return view('admin.posts')->with($data);
@@ -128,6 +134,7 @@ class AdminController extends Controller
                 $this->breadcrumbActive['post-create']                
             ],
             'customizeIsCollapsed' => true,
+            'numMessages' => Message::count(),
             'activeListGroupItem' => 'posts'
         );
 
@@ -147,6 +154,7 @@ class AdminController extends Controller
                 $this->breadcrumbActive['post-edit']                                
             ],
             'customizeIsCollapsed' => true,
+            'numMessages' => Message::count(),
             'activeListGroupItem' => 'posts',
 
             'post' => $post
@@ -165,6 +173,7 @@ class AdminController extends Controller
                 $this->breadcrumbActive['customize']                                
             ],
             'customizeIsCollapsed' => false,
+            'numMessages' => Message::count(),
             'activeListGroupItem' => 'customization',
 
             'theme' => $theme->name,
@@ -189,6 +198,7 @@ class AdminController extends Controller
             ],
             'customizeIsCollapsed' => false,
             'activeListGroupItem' => 'general',
+            'numMessages' => Message::count(),
             'theme' => $theme->name,
             'header' => $theme->themeHeaderOptions[1],
             'themeColors' => $themeColors,
@@ -253,6 +263,7 @@ class AdminController extends Controller
             ],
             'customizeIsCollapsed' => false,
             'activeListGroupItem' => 'navbar',
+            'numMessages' => Message::count(),
             'navItems' => $navItems,
             'theme' => $theme->name,
             'header' => $theme->themeHeaderOptions[1],
@@ -310,13 +321,20 @@ class AdminController extends Controller
         return redirect('/admin/customize/navbar')->with('success', 'Navbar updated');
     }
 
-    public function customizeHeader() {
+    public function customizeHeader(Request $request) {
         $theme = Theme::where('is_active', true)->get()->first();        
-        $navItems = Navitem::orderBy('position', 'asc')->get();   
         $headerImages = HeaderImage::all();     
         $themeOptions = GeneralOptions::where('theme', 'custom')->get()->first();
         $font = Fonts::find($themeOptions->fonts_id);
         $themeColor = ThemeColor::find($themeOptions->theme_colors_id);
+
+        $locale = substr($request->server('HTTP_ACCEPT_LANGUAGE'), 0, 2);
+        if($locale == 'de') {
+            $navItems = Navitem::orderBy('position', 'asc')->where('language', 'de')->get();
+        }
+        else {
+            $navItems = Navitem::orderBy('position', 'asc')->where('language', 'en')->get();
+        }
 
         // Data to pass into the template
         $data = array(
@@ -328,7 +346,8 @@ class AdminController extends Controller
             ],
             'customizeIsCollapsed' => false,
             'activeListGroupItem' => 'header',
-
+            'language' => $locale,
+            'numMessages' => Message::count(),
             'navItems' => $navItems,
             'theme' => $theme->name,
             'header' => $theme->themeHeaderOptions[1],
@@ -351,30 +370,7 @@ class AdminController extends Controller
         $theme = Theme::where('is_active', true)->get()->first();  
         $themeOptions1 = $theme->themeHeaderOptions[1];       
         $themeOptions2 = $theme->themeHeaderOptions[3];       
-/*         
-        // Handle File Upload
-        if ($request->hasFile('header_img')) {
-            // Get file name with extension
-            $fileNameWithExt = $request->file('header_img')->getClientOriginalName();
 
-            // Get just file name
-            $filename = pathinfo($fileNameWithExt, PATHINFO_FILENAME);
-
-            // Get just extension
-            $extension = $request->file('header_img')->getClientOriginalExtension();
-
-            // Create file name to store 
-            // Add timestamp to avoid clash of identical file names
-            $fileNameToStore = $filename.'_'.time().'.'.$extension;
-
-            // Upload Image
-            $path = $request->file('header_img')->storeAs('public/header_images', $fileNameToStore);
-            
-            // eventually add again
-            //Storage::delete('public/cover_images/'.$post->cover_img);
-            $themeOptions->background_image = $fileNameToStore;
-        }
-  */
         $themeOptions1->title = $request->input('title');
         $themeOptions1->subtitle = $request->input('subtitle');
         $themeOptions1->background_image = $request->input('header_img');
@@ -393,11 +389,13 @@ class AdminController extends Controller
         $activity->url_address = '/admin/customize/header';
         $activity->save();
 
-        return redirect('/admin/customize')->with('success', 'Theme Header updated');
+        return redirect('/admin/customize/header')->with('success', 'Theme Header updated');
     }
 
     public function customizeFooter() {
         $theme = Theme::where('is_active', true)->get()->first(); 
+        $footer = Footer::where('theme', 'custom')->get()->first();
+
 
         // Data to pass into the template
         $data = array(
@@ -409,11 +407,45 @@ class AdminController extends Controller
             ],
             'customizeIsCollapsed' => false,
             'activeListGroupItem' => 'footer',
+            'numMessages' => Message::count(),
             'theme' => $theme->name,
-            'header' => $theme->themeHeaderOptions[1]
+            'footer' => $footer
         );
 
         return view('admin.customize-footer')->with($data);
+    }
+
+    public function customizeFooterUpdate(Request $request) {
+        $this->validate($request, [
+            'about' => 'required',
+            'aboutde' => 'required',
+            'address' => 'required',
+            'addressde' => 'required',
+            'facebook' => 'required',
+            'twitter' => 'required',
+            'youtube' => 'required',
+            'linkedin' => 'required',      
+        ]);
+        
+        $footer = Footer::where('theme', 'custom')->get()->first();
+        $footer->about_en = $request->input('about');
+        $footer->about_de = nl2br($request->input('aboutde'));
+        $footer->address_en = nl2br($request->input('address'));
+        $footer->address_de = nl2br($request->input('addressde'));
+        $footer->facebook = nl2br($request->input('facebook'));
+        $footer->twitter = $request->input('twitter');
+        $footer->youtube = $request->input('youtube');
+        $footer->linkedin = $request->input('linkedin');
+        $footer->save();
+       
+        $activity = new Activity;
+        $activity->description = 'Footer updated';
+        $activity->user_id = auth()->user()->id;
+        $activity->url_title = 'Footer Customization';
+        $activity->url_address = '/admin/customize/footer';
+        $activity->save();
+
+        return redirect('/admin/customize/footer')->with('success', 'Footer updated');    
     }
 
     public function customizeThemes() {
@@ -429,6 +461,7 @@ class AdminController extends Controller
             ],
             'customizeIsCollapsed' => false,
             'activeListGroupItem' => 'themes',
+            'numMessages' => Message::count(),
             'theme' => $theme->name,
             'header' => $theme->themeHeaderOptions[1]
         );
@@ -436,7 +469,6 @@ class AdminController extends Controller
         return view('admin.customize-themes')->with($data);
     }
 
-    
     public function getMessages() {
         $messages = Message::all();
 
@@ -448,13 +480,37 @@ class AdminController extends Controller
             ],
             'customizeIsCollapsed' => true,
             'activeListGroupItem' => 'messages',
+            'numMessages' => Message::count(),
             'messages' => $messages
         );
 
         return view('admin.messages')->with($data);
     }
 
-    public function setPageColor(Request $request)
+    public function showMessage(Request $request, $id) {
+        $message = Message::find($id);
+
+        $data = array(
+            'title' => 'Messages',
+            'icon' => 'comments-o',
+            'breadcrumbs' => [
+                $this->breadcrumbActive['messages']                                
+            ],
+            'customizeIsCollapsed' => true,
+            'activeListGroupItem' => 'messages',
+            'numMessages' => Message::count(),
+            'message' => $message
+        );
+
+        return view('admin.show-message')->with($data);
+    }
+
+    public function replyMessage(Request $request) {
+        
+        return 'ToDo';
+    }
+
+    public function setPageColor(Request $request, $url) 
     {
         $this->validate($request, [
             'color' => 'required',
@@ -464,6 +520,7 @@ class AdminController extends Controller
         $user->theme_color = $request->input('color');
         $user->save();
 
-        return redirect('/admin')->with('success', 'Set new page color');
+        $redirectUrl = '/'.str_replace('.', '/', $url);
+        return redirect($redirectUrl)->with('success', 'Set new page color');
     }
 }

@@ -6,7 +6,12 @@
     <a href="/admin/pages" class="list-group-item <?php echo e($activeListGroupItem == 'pages' ? 'active main-color-bg' : ''); ?>">
         <i class="fa fa-leanpub" aria-hidden="true"></i>Pages</a>
     <a href="/admin/messages" class="list-group-item <?php echo e($activeListGroupItem == 'messages' ? 'active main-color-bg' : ''); ?>">
-        <i class="fa fa-comments-o" aria-hidden="true"></i>Messages</a>
+        <i class="fa fa-comments-o" aria-hidden="true"></i>
+        Messages 
+        <?php if($numMessages > 0): ?>
+        <span class="badge"><?php echo e($numMessages); ?></span>
+        <?php endif; ?>
+    </a>
 
 
     <?php if($customizeIsCollapsed): ?>

@@ -1,5 +1,6 @@
 @extends('layouts.'.$theme)
 
 @section('content')
-    @include('inc.posts.edit')
+    <h1>{{$language === 'de' ? 'Post ändern' : 'Edit Post'}}</h1>
+    @include('inc.posts.edit-onpage')
 @endsection

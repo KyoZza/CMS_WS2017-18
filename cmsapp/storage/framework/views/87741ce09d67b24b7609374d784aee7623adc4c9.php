@@ -1,4 +1,10 @@
 <script>
+    $( document ).ready(function() {
+        $('.affix .navbar').addClass("themeColor-light");
+        $('.affix .navbar-brand').addClass("themeColor-light");
+        $('.affix .navbar-default .navbar-nav > li > a').addClass("themeColor-light");
+    });
+
     // fixate navbar on top after scrolling down
     $('#nav').affix({
         offset: {

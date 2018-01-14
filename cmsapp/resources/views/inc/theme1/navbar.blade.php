@@ -32,15 +32,17 @@
                     <li><a href="{{ route('register') }}">Register</a></li>
                 @else
                     <li id="nav-dropdown" class="dropup">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true">
-                            Welcome, {{ Auth::user()->name }} <span class="caret"></span>
+                        <img src="{{Auth::user()->avatar === null ? '/storage/general_images/transparent.png' : '/storage/user_images/'.Auth::user()->avatar}}" 
+                            width="38px" style="border: 1px solid #ddd; position: relative; bottom: 1px;">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" style="display: inline-block">
+                            Yo, {{ Auth::user()->name }} <span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu">
                             <li>
-                                <a href="{{ url('/blog/create') }}">Create Post</a>
+                                <a href="{{ url('/blog/create') }}">{{$language === 'de' ? 'Post erstellen' : 'Create Post'}}</a>
                             </li>
                             <li>
-                                <a href="{{ url('/admin') }}">User Area</a>
+                                <a href="{{ url('/admin') }}">{{$language === 'de' ? 'Nutzerbereich' : 'User Area'}}</a>
                             </li>
                             <li>
                                 <a href="{{ route('logout') }}"

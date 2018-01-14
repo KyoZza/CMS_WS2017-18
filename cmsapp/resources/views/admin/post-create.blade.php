@@ -1,5 +1,13 @@
 @extends('layouts.backend')
 
 @section('content')
-    @include('inc.posts.create')
+    <div class="panel panel-default">
+        <div class="panel-heading main-color-bg">
+            <h3 class="panel-title">{{$breadcrumbs[1]->name}}</h3>
+        </div>
+        <div class="panel-body">
+            @include('inc.posts.create')
+        </div>
+    </div>
+    
 @endsection

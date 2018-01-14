@@ -1,5 +1,4 @@
 <?php $__env->startSection('content'); ?>
-    <?php echo $__env->make('inc.general.messages', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
     <div class="panel panel-default">
         <div class="panel-heading main-color-bg">Users</div>
 
@@ -21,6 +20,8 @@
                     <?php $__currentLoopData = $users; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $user): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                         <tr>
                             <td>
+                                <img src="<?php echo e($user->avatar === null ? '/storage/general_images/transparent.png' : '/storage/user_images/'.$user->avatar); ?>" 
+                                    width="26px">
                                 <a href="/admin/users/<?php echo e($user->id); ?>"><?php echo e($user->name); ?></a>
                             </td>
                             <td>

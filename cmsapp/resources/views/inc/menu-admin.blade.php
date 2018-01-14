@@ -6,7 +6,12 @@
     <a href="/admin/pages" class="list-group-item {{$activeListGroupItem == 'pages' ? 'active main-color-bg' : ''}}">
         <i class="fa fa-leanpub" aria-hidden="true"></i>Pages</a>
     <a href="/admin/messages" class="list-group-item {{$activeListGroupItem == 'messages' ? 'active main-color-bg' : ''}}">
-        <i class="fa fa-comments-o" aria-hidden="true"></i>Messages</a>
+        <i class="fa fa-comments-o" aria-hidden="true"></i>
+        Messages 
+        @if ($numMessages > 0)
+        <span class="badge">{{$numMessages}}</span>
+        @endif
+    </a>
 
 
     @if($customizeIsCollapsed)

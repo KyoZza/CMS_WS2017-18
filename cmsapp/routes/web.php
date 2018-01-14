@@ -34,6 +34,7 @@ Route::put('/admin/customize/navbar/{id}', 'AdminController@customizeNavbarUpdat
 Route::get('/admin/customize/header', 'AdminController@customizeHeader');
 Route::put('/admin/customize/header', 'AdminController@customizeHeaderUpdate');
 Route::get('/admin/customize/footer', 'AdminController@customizeFooter');
+Route::put('/admin/customize/footer', 'AdminController@customizeFooterUpdate');
 Route::get('/admin/customize/themes', 'AdminController@customizeThemes');
 
 // posts
@@ -43,12 +44,13 @@ Route::get('/admin/posts/{id}/edit', 'AdminController@editPost');
 
 // users
 Route::resource('/admin/users', 'UserController');
+Route::put('/admin/user/{id}/image', 'UserController@selectUserAvater');
 
 // pages
 Route::resource('/admin/pages', 'PagesController');
 
 // admin page color
-Route::post('/admin/color', 'AdminController@setPageColor');
+Route::put('/admin/color/{url}', 'AdminController@setPageColor');
 
 
 
@@ -56,14 +58,16 @@ Route::post('/admin/color', 'AdminController@setPageColor');
 Route::resource('blog', 'PostsController');
 
 
-
 /* contact routes */
 // form
-Route::get('/contact', 'MessagesController@contact');  
+Route::get('/contact', 'MessagesController@contact');
 Route::post('/contact/submit', 'MessagesController@submit');
 
 // messages
 Route::get('/admin/messages', 'AdminController@getMessages');
+Route::get('/admin/messages/{id}', 'AdminController@showMessage');
+Route::post('/admin/messages/reply', 'AdminController@replyMessage');
+
 
 
 

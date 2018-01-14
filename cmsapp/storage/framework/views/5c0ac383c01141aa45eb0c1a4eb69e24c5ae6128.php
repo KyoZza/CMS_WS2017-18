@@ -24,8 +24,8 @@
         </div>
         <div class="col-md-3">
             <div class="well dash-box">
-                <h2><i class="fa fa-bar-chart" aria-hidden="true"></i>#1222</h2>
-                <h4>Visitors</h4>
+                <h2><i class="fa fa-comments-o" aria-hidden="true"></i><?php echo e($numMessages); ?></h2>
+                <h4>Messages</h4>
             </div>       
         </div>
     </div>

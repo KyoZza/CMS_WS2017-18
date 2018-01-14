@@ -7,21 +7,47 @@
     </div>
     <div class="panel-body">
         <div class="row">
-            <div class="col-md-3 col-sm-3"><strong>Username:</strong></div>
-            <div class="col-md-9 col-sm-9">{{$user->name}}</div>            
+            <!-- Avatar -->
+            <div class="col-md-3">
+                <div class="thumbnail" style="position: relative">
+                    <img src="{{$user->avatar === null ? '/storage/general_images/transparent.png' : '/storage/user_images/'.$user->avatar}}" 
+                        alt="User Avatar">
+                    
+                    @if(Auth::user()->id == $user->id || Auth::user()->hasRole('Super Saiyajin'))
+                    {!! Form::open(['action' => ['UserController@selectUserAvater', $user->id], 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
+                        {{Form::file('user-avatar-file', ['onchange' => 'onSelectUserAvatar(event)', 
+                            'style' => 'opacity: 0; filter:alpha(opacity=0); width: 100%; height: 100%; position: absolute; top: 0; cursor: pointer'
+                            ,'id' => 'user-avatar-file']) }}
+                        {{Form::hidden('_method', 'PUT')}} <!-- To spoof a PUT request instead of POST -->
+                        {{Form::submit('Submit', ['class' => 'btn btn-primary', 'style' => 'display: none', 'id' => 'user-avatar-submit'])}}
+                    {!! Form::close() !!}
+                    @endif 
+                    
+                </div>
+                
+            </div>
+            
+            <!-- User description -->
+            <div class="col-md-9">
+                <div class="row">
+                    <div class="col-md-3 col-sm-3"><strong>Username:</strong></div>
+                    <div class="col-md-9 col-sm-9">{{$user->name}}</div>            
+                </div>
+                <div class="row">
+                    <div class="col-md-3 col-sm-3"><strong>Email:</strong></div>
+                    <div class="col-md-9 col-sm-9">{{$user->email}}</div>            
+                </div>
+                <div class="row">
+                    <div class="col-md-3 col-sm-3"><strong>Role:</strong></div>
+                    <div class="col-md-9 col-sm-9">{{$user->roles->first()->name}}</div>            
+                </div>
+                <div class="row">
+                    <div class="col-md-3 col-sm-3"><strong>User since:</strong></div>
+                    <div class="col-md-9 col-sm-9">{{$user->created_at}}</div>            
+                </div>
+            </div>
         </div>
-        <div class="row">
-            <div class="col-md-3 col-sm-3"><strong>Email:</strong></div>
-            <div class="col-md-9 col-sm-9">{{$user->email}}</div>            
-        </div>
-        <div class="row">
-            <div class="col-md-3 col-sm-3"><strong>Role:</strong></div>
-            <div class="col-md-9 col-sm-9">{{$user->roles->first()->name}}</div>            
-        </div>
-        <div class="row">
-            <div class="col-md-3 col-sm-3"><strong>User since:</strong></div>
-            <div class="col-md-9 col-sm-9">{{$user->created_at}}</div>            
-        </div>
+        
     </div>
 </div>
 

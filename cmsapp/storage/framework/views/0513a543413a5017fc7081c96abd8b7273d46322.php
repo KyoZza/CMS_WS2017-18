@@ -33,15 +33,17 @@
                     <li><a href="<?php echo e(route('register')); ?>">Register</a></li>
                 <?php else: ?>
                     <li id="nav-dropdown" class="dropup">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true">
-                            Welcome, <?php echo e(Auth::user()->name); ?> <span class="caret"></span>
+                        <img src="<?php echo e(Auth::user()->avatar === null ? '/storage/general_images/transparent.png' : '/storage/user_images/'.Auth::user()->avatar); ?>" 
+                            width="38px" style="border: 1px solid #ddd; position: relative; bottom: 1px;">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" style="display: inline-block">
+                            Yo, <?php echo e(Auth::user()->name); ?> <span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu">
                             <li>
-                                <a href="<?php echo e(url('/blog/create')); ?>">Create Post</a>
+                                <a href="<?php echo e(url('/blog/create')); ?>"><?php echo e($language === 'de' ? 'Post erstellen' : 'Create Post'); ?></a>
                             </li>
                             <li>
-                                <a href="<?php echo e(url('/admin')); ?>">User Area</a>
+                                <a href="<?php echo e(url('/admin')); ?>"><?php echo e($language === 'de' ? 'Nutzerbereich' : 'User Area'); ?></a>
                             </li>
                             <li>
                                 <a href="<?php echo e(route('logout')); ?>"

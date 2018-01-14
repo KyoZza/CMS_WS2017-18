@@ -13,6 +13,8 @@ use App\ThemeHeaderOptions;
 use App\GeneralOptions;
 use App\Fonts;
 use App\ThemeColor;
+use App\Message;
+use App\Footer;
 use App;
 use Session;
 use Config;
@@ -64,28 +66,29 @@ class PagesController extends Controller
        
         $themeoption = 0;
         if($locale === 'en'){
-            $themeoption = 1;
+            $themeoption = 3;
         }
         else
-            $themeoption =3;
+            $themeoption = 1;
 
         $themeOptions = GeneralOptions::where('theme', 'custom')->get()->first();
         $font = Fonts::find($themeOptions->fonts_id);
         $themeColor = ThemeColor::find($themeOptions->theme_colors_id);
+        $footer = Footer::where('theme', 'custom')->get()->first();
         
-        
-
+    
         $data = [
             'page' => $page,
             'navItems' => $navItems,
             'header' => $theme->themeHeaderOptions[$themeoption],
             'themeOptions' => $themeOptions,   
             'font' => $font,
-            'themeColor' => $themeColor
+            'themeColor' => $themeColor,
+            'footer' => $footer,
+            'language' => $locale 
         ];
 
 
-        //HILFE mit den Themes :)
         $themeName = $theme->name;
         if($locale ==  'en') {
             if($themeName == 'theme1') 
@@ -119,22 +122,19 @@ class PagesController extends Controller
             if(!$page->is_published)
                 abort(404);
             else {
-                
-        
-                $theme = Theme::where('is_active', true)->get()->first();
-                
-                
+                $theme = Theme::where('is_active', true)->get()->first();          
                
                 $themeoption = 0;
                 if($locale === 'en'){
-                    $themeoption = 1;
+                    $themeoption = 3;
                 }
                 else
-                    $themeoption =3;
+                    $themeoption = 1;
                     
                 $themeOptions = GeneralOptions::where('theme', 'custom')->get()->first();
                 $font = Fonts::find($themeOptions->fonts_id);
                 $themeColor = ThemeColor::find($themeOptions->theme_colors_id);
+                $footer = Footer::where('theme', 'custom')->get()->first();
         
                 //return $themeoption;
 
@@ -144,9 +144,10 @@ class PagesController extends Controller
                     'header' => $theme->themeHeaderOptions[$themeoption],
                     'themeOptions' => $themeOptions,   
                     'font' => $font,
-                    'themeColor' => $themeColor
+                    'themeColor' => $themeColor,
+                    'footer' => $footer,
+                    'language' => $locale 
                 ];
-        ;
 
                 $themeName = $theme->name;
                 
@@ -182,7 +183,7 @@ class PagesController extends Controller
             ],
             'customizeIsCollapsed' => true,
             'activeListGroupItem' => 'pages',
-
+            'numMessages' => Message::count(),
             'pages' => $pages
         );
 
@@ -210,6 +211,7 @@ class PagesController extends Controller
             ],
             'customizeIsCollapsed' => true,
             'activeListGroupItem' => 'pages',
+            'numMessages' => Message::count(),
         );
 
         return view('admin.pages.create')->with($data);
@@ -231,17 +233,22 @@ class PagesController extends Controller
             'title' => 'required',
             'body' => 'required',
             'url' => 'required',
-            'bodyde' => 'required'
-
+            'bodyde' => 'required',
         ]);
+
+        $isPublished = $request->input('is_published') !== null;
+        
+        $url = $request->input('url');
+        $url = $url[0] === '/' ? $url : '/'.$url;
+        $hasNavItem = $request->input('has_navitem') !== null;
 
         // create new Page to store
         $page = new Page;
         $page->title = $request->input('title');
         $page->body = $request->input('body');
-        $page->user_id = auth()->user()->id;
-        $page->url = $request->input('url');
-        $page->is_published = $request->input('is_published') !== null;
+        $page->user_id = auth()->user()->id;    
+        $page->url = $url;
+        $page->is_published = $isPublished;
         $page->language = 'en';
         $page->save();
 
@@ -249,10 +256,28 @@ class PagesController extends Controller
         $pagede->title = $request->input('titlede');
         $pagede->body = $request->input('bodyde');
         $pagede->user_id = auth()->user()->id;
-        $pagede->url = $request->input('url');
-        $pagede->is_published = $request->input('is_published') !== null;
+        $pagede->url = $url;
+        $pagede->is_published = $isPublished;
         $pagede->language = 'de';
         $pagede->save();
+
+        if ($hasNavItem) {
+            $postion = NavItem::count() / 2;
+
+            $navItemEn = new NavItem;
+            $navItemEn->title = $request->input('title');
+            $navItemEn->position = $postion;
+            $navItemEn->link = $url;
+            $navItemEn->language = 'en';
+            $navItemEn->save();
+
+            $navItemDe = new NavItem;
+            $navItemDe->title = $request->input('titlede');
+            $navItemDe->position = $postion;
+            $navItemDe->link = $url;
+            $navItemDe->language = 'de';
+            $navItemDe->save();
+        }
 
         // create new Activity for the newly stored Page        
         $activity = new Activity;
@@ -285,7 +310,7 @@ class PagesController extends Controller
             ],
             'customizeIsCollapsed' => true,
             'activeListGroupItem' => 'pages',
-
+            'numMessages' => Message::count(),
             'page' => $page
         );
 
@@ -316,7 +341,7 @@ class PagesController extends Controller
             ],
             'customizeIsCollapsed' => true,
             'activeListGroupItem' => 'pages',
-
+            'numMessages' => Message::count(),
             'page' => $page
         );
 
@@ -376,8 +401,15 @@ class PagesController extends Controller
 
         
         // delete Page
-        $page = Page::find($id);
-        $page->delete();
+        $pageToSearch = Page::find($id);
+
+        $navItems = NavItem::where('link', $pageToSearch->url)->get();
+        $pages = Page::where('url', $pageToSearch->url)->get();
+
+        foreach ($navItems as $navItem) 
+            $navItem->delete();
+        foreach ($pages as $page) 
+            $page->delete();
 
         // create new Activity for the newly stored Page        
         $activity = new Activity;

@@ -35,7 +35,9 @@
     }
 
     /* navbar */
-    
+    .navbar {
+        min-height: 38px
+    }
 
     /* header customization */
     @media (min-width: 768px) {

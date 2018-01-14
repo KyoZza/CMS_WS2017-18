@@ -98,6 +98,20 @@
     </script>
 
     <script>
+        function onPageTitleChange(event) {
+            const value = $(".page-form #title").val();
+            
+            $(".page-form #url").val(value);
+        }
+    </script>
+
+    <script>
+        function onSelectUserAvatar(event) {
+            $('#user-avatar-submit').click();
+        }
+    </script>
+
+    <script>
         function onHeaderTitleChange(event) {
             const value = $(".header-form #title").val();
             

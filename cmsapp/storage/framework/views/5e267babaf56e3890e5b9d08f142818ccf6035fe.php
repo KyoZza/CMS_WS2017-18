@@ -1,16 +1,8 @@
 <?php $__env->startSection('content'); ?>
-    <?php echo $__env->make('inc.general.messages', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
     <div class="panel panel-default">
         <div class="panel-heading main-color-bg">Pages</div>
 
         <div class="panel-body">
-            <?php if(session('status')): ?>
-                <div class="alert alert-success">
-                    <?php echo e(session('status')); ?>
-
-                </div>
-            <?php endif; ?>
-
             <?php if(Auth::user()->hasAnyRole(['Website Manager', 'Super Saiyajin'])): ?>
                 <a href="/admin/pages/create" class="btn btn-default">Create Page</a>
                 <br><br>
